@@ -3,142 +3,280 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulasi Perakitan Komputer (Sesi 2 Jam) - SMKN 1 Petasia</title>
+  <title>Simulasi Perakitan Komputer (Sesi 2 Jam) — SMKN 1 Petasia</title>
   <style>
-    /* CSS RESET & VARIABLES */
+    /* ==========================================================================
+       CSS RESET & DESIGN TOKENS (DARK NAVY MODERN — 100% OFFLINE)
+       ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+
     :root {
-      --bg-dark: #0b0f19;
-      --bg-card: #151d2a;
-      --bg-card-hover: #1c2738;
-      --bg-input: #0f1623;
-      --border-color: #2a374e;
-      --border-highlight: #0284c7;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --accent-blue: #38bdf8;
-      --accent-neon: #00e5ff;
+      --bg-dark: #090d16;
+      --bg-panel: #111827;
+      --bg-card: #162032;
+      --bg-card-hover: #1e2b42;
+      --bg-input: #0c1220;
+      --border-color: #283650;
+      --border-glow: rgba(56, 189, 248, 0.45);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-neon: #22d3ee;
+      --accent-blue: #3b82f6;
+      --accent-gold: #f59e0b;
       --accent-success: #10b981;
       --accent-error: #ef4444;
-      --accent-warning: #f59e0b;
-      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --radius: 12px;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
 
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
-      font-family: var(--font-family);
+      font-family: var(--font-sans);
       line-height: 1.5;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      user-select: none;
+      overflow-x: hidden;
     }
 
-    /* TOP RIBBON BANNER */
+    /* ==========================================================================
+       TOP IDENTITY RIBBON BANNER
+       ========================================================================== */
     .top-ribbon {
-      background: linear-gradient(90deg, #1e1b4b, #311b92, #0f172a);
-      border-bottom: 1px solid #3730a3;
-      padding: 6px 16px;
+      background: linear-gradient(90deg, #0c1326 0%, #1e1b4b 40%, #0e4a6b 78%, #0c4a6e 100%);
+      border-bottom: 2px solid var(--accent-cyan);
+      padding: 8px 20px;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 4px 16px rgba(6, 182, 212, 0.2);
     }
 
     .ribbon-left {
-      color: #a5b4fc;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      background: rgba(9, 13, 22, 0.78);
+      border: 1px solid rgba(34, 211, 238, 0.55);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #e0f2fe;
+      letter-spacing: 0.4px;
     }
 
-    .ribbon-right-badge {
-      background: rgba(99, 102, 241, 0.2);
-      border: 1px solid #6366f1;
-      color: #c7d2fe;
-      padding: 2px 10px;
-      border-radius: 9999px;
-      font-size: 11px;
+    .ribbon-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--accent-neon);
+      box-shadow: 0 0 8px var(--accent-neon);
+      animation: pulseDot 1.8s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+
+    .ribbon-badge {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0b0f19;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
     }
 
-    /* HEADER DASHBOARD */
-    header {
-      background-color: var(--bg-card);
+    /* ==========================================================================
+       HEADER & TIMER 120 MENIT
+       ========================================================================== */
+    header.app-header {
+      background: linear-gradient(180deg, #131c2e 0%, #0f172a 100%);
       border-bottom: 1px solid var(--border-color);
       padding: 16px 24px;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
       gap: 16px;
     }
 
-    .header-title h1 {
-      font-size: 22px;
-      color: var(--accent-neon);
+    .header-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
     }
 
-    .header-title p {
-      font-size: 13px;
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(6, 182, 212, 0.14);
+      border: 1px solid rgba(34, 211, 238, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-neon);
+      flex-shrink: 0;
+    }
+
+    .header-brand h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+    }
+
+    .header-brand p {
+      font-size: 0.84rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
 
     .header-controls {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 16px;
-    }
-
-    .timer-box {
+      gap: 10px;
       background: var(--bg-input);
       border: 1px solid var(--border-color);
-      padding: 6px 14px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 8px 14px;
+      border-radius: var(--radius);
+    }
+
+    .timer-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
     .timer-display {
-      font-family: monospace;
-      font-size: 20px;
-      font-weight: bold;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.45rem;
+      font-weight: 800;
       color: var(--accent-neon);
+      letter-spacing: 1.5px;
+      min-width: 78px;
+      text-align: center;
     }
 
-    /* NAV TABS */
+    /* ==========================================================================
+       BUTTONS & INPUTS
+       ========================================================================== */
+    .btn {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-neon);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #059669, #10b981);
+      border-color: #34d399;
+      color: #ffffff;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      border-color: #fbbf24;
+      color: #0b0f19;
+    }
+
+    .input-field {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent-neon);
+      box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.15);
+    }
+
+    /* ==========================================================================
+       NAVIGATION TABS
+       ========================================================================== */
     nav.nav-tabs {
-      background-color: #0d131f;
+      background: #0d1424;
       border-bottom: 1px solid var(--border-color);
+      padding: 0 24px;
       display: flex;
+      gap: 6px;
       overflow-x: auto;
-      padding: 0 16px;
     }
 
     .tab-btn {
       background: transparent;
       border: none;
-      color: var(--text-muted);
-      padding: 14px 20px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
       border-bottom: 3px solid transparent;
-      transition: all 0.2s ease;
+      color: var(--text-muted);
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
       white-space: nowrap;
+      transition: all 0.2s ease;
     }
 
     .tab-btn:hover {
@@ -149,525 +287,723 @@
     .tab-btn.active {
       color: var(--accent-neon);
       border-bottom-color: var(--accent-neon);
-      background: rgba(0, 229, 255, 0.05);
+      background: rgba(6, 182, 212, 0.08);
     }
 
-    /* MAIN CONTAINER */
+    /* ==========================================================================
+       MAIN CONTENT & SECTIONS
+       ========================================================================== */
     main {
       flex: 1;
-      padding: 20px;
-      max-width: 1440px;
       width: 100%;
+      max-width: 1480px;
       margin: 0 auto;
+      padding: 20px;
     }
 
     .tab-content {
       display: none;
+      animation: fadeIn 0.25s ease;
     }
 
     .tab-content.active {
       display: block;
     }
 
-    /* COMMON BUTTONS & INPUTS */
-    .btn {
-      background: var(--bg-card-hover);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s ease;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .btn:hover:not(:disabled) {
-      border-color: var(--accent-blue);
-      color: #ffffff;
-      transform: translateY(-1px);
+    .section-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-neon);
+      margin-bottom: 6px;
     }
 
-    .btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
+    .section-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      border-color: #3b82f6;
-      color: #fff;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
-    }
-
-    .btn-success {
-      background: linear-gradient(135deg, #059669, #10b981);
-      border-color: #34d399;
-      color: #fff;
-    }
-
-    .btn-danger {
-      background: linear-gradient(135deg, #dc2626, #ef4444);
-      border-color: #f87171;
-      color: #fff;
-    }
-
-    .input-field {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 6px;
-      width: 100%;
-      font-size: 14px;
-    }
-
-    .input-field:focus {
-      outline: none;
-      border-color: var(--accent-neon);
-    }
-
-    /* TAB 1: ALUR & K3 */
+    /* ==========================================================================
+       TAB 1: ALUR & K3
+       ========================================================================== */
     .timeline-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
 
     .timeline-card {
-      background: var(--bg-card);
+      background: var(--bg-panel);
       border: 1px solid var(--border-color);
-      border-left: 4px solid var(--accent-blue);
-      padding: 16px;
-      border-radius: 8px;
+      border-top: 4px solid var(--accent-cyan);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .time-pill {
+      display: inline-block;
+      background: rgba(6, 182, 212, 0.16);
+      color: var(--accent-neon);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
     }
 
     .timeline-card h3 {
-      font-size: 15px;
-      color: var(--accent-neon);
+      font-size: 1rem;
+      color: #ffffff;
       margin-bottom: 6px;
     }
 
     .timeline-card p {
-      font-size: 13px;
+      font-size: 0.84rem;
       color: var(--text-muted);
     }
 
-    .k3-section {
+    .k3-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 960px) {
+      .k3-layout { grid-template-columns: 1fr; }
+    }
+
+    .panel-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .k3-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .k3-list li {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 24px;
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .k3-list li span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      margin-top: 3px;
     }
 
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 520px) {
+      .tools-grid { grid-template-columns: 1fr; }
     }
 
     .tool-card {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .tool-card svg {
-      width: 50px;
-      height: 50px;
-      margin-bottom: 10px;
-      fill: var(--accent-blue);
-    }
-
-    /* TAB 2: ENSIKLOPEDIA */
-    .encyclo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .encyclo-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 10px;
-      padding: 16px;
+      padding: 14px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-cyan);
+    }
+
+    .tool-card svg {
+      width: 68px;
+      height: 68px;
+      margin-bottom: 8px;
+    }
+
+    .tool-card h4 {
+      font-size: 0.9rem;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .tool-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       TAB 2: ENSIKLOPEDIA KOMPONEN (9 KOMPONEN)
+       ========================================================================== */
+    .encyclo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .encyclo-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s;
+      cursor: pointer;
+      transition: all 0.25s ease;
     }
 
     .encyclo-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent-blue);
+      transform: translateY(-4px);
+      border-color: var(--accent-neon);
+      box-shadow: 0 10px 24px rgba(6, 182, 212, 0.14);
     }
 
-    .encyclo-img-box {
+    .encyclo-svg-box {
       background: var(--bg-input);
-      border-radius: 8px;
-      height: 140px;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      height: 132px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 14px;
+      padding: 10px;
     }
 
-    /* TAB 3: SIMULASI RAKIT PC */
+    .encyclo-card h3 {
+      font-size: 1rem;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .encyclo-spec {
+      font-size: 0.78rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .encyclo-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* ==========================================================================
+       TAB 3: SIMULASI RAKIT PC (3 KOLOM)
+       ========================================================================== */
     .sim-layout {
       display: grid;
-      grid-template-columns: 280px 1fr 320px;
-      gap: 20px;
+      grid-template-columns: 295px 1fr 330px;
+      gap: 18px;
+      align-items: start;
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1180px) {
       .sim-layout {
         grid-template-columns: 1fr;
       }
     }
 
     .sim-panel {
-      background: var(--bg-card);
+      background: var(--bg-panel);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
+      border-radius: var(--radius);
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
+    }
+
+    .sim-panel-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--accent-neon);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .comp-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
 
     .comp-item {
       background: var(--bg-input);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 10px 12px;
-      font-size: 13px;
-      cursor: pointer;
+      border-radius: 8px;
+      padding: 9px 11px;
+      font-size: 0.82rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.2s;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .comp-item.active {
       border-color: var(--accent-neon);
-      background: rgba(0, 229, 255, 0.1);
-      box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
+      background: rgba(6, 182, 212, 0.14);
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.18);
+      color: #ffffff;
+      font-weight: 700;
     }
 
     .comp-item.done {
       border-color: var(--accent-success);
       background: rgba(16, 185, 129, 0.1);
-      opacity: 0.8;
+      color: #a7f3d0;
+      cursor: default;
     }
 
     .comp-item.locked {
-      opacity: 0.4;
+      opacity: 0.45;
       cursor: not-allowed;
     }
 
-    .badge-status {
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
+    .status-badge {
+      font-size: 0.66rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 800;
       text-transform: uppercase;
-      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .badge-active { background: #0284c7; color: #fff; }
-    .badge-done { background: #10b981; color: #fff; }
-    .badge-locked { background: #4b5563; color: #d1d5db; }
+    .badge-active { background: #0284c7; color: #ffffff; }
+    .badge-done { background: #059669; color: #ffffff; }
+    .badge-locked { background: #334155; color: #cbd5e1; }
 
-    /* SVG MOTHERBOARD CANVAS */
-    .board-container {
-      position: relative;
-      background: #080d14;
+    /* MOTHERBOARD SVG CANVAS */
+    .board-wrapper {
+      background: #060a12;
       border: 1px solid var(--border-color);
       border-radius: 10px;
       padding: 10px;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.85);
     }
 
     .motherboard-svg {
       width: 100%;
       height: auto;
-      max-height: 560px;
+      max-height: 600px;
       display: block;
     }
 
-    /* ARSITEKTUR HITBOX ANTI-BENTROK */
+    /* 3-LAYER SVG ANTI-BENTROK RULES (TANPA HINT KUNING) */
     #layer-installed {
       pointer-events: none !important;
     }
 
-    #layer-hitboxes rect, #layer-hitboxes polygon {
+    #layer-hitboxes rect {
       fill: transparent;
-      pointer-events: all;
-      cursor: pointer;
       stroke: transparent;
       stroke-width: 2;
-      transition: stroke 0.15s ease, fill 0.15s ease;
+      pointer-events: all;
+      cursor: pointer;
+      transition: stroke 0.16s ease, fill 0.16s ease;
     }
 
-    #layer-hitboxes rect:hover, #layer-hitboxes polygon:hover {
+    #layer-hitboxes rect:hover {
       stroke: rgba(255, 255, 255, 0.35);
-      fill: rgba(255, 255, 255, 0.08);
+      fill: rgba(255, 255, 255, 0.06);
     }
 
+    .fan-spin {
+      animation: spinFan 0.55s linear infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    @keyframes spinFan {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* RIGHT PANEL: PROGRESS & FEEDBACK */
     .progress-bar-bg {
+      width: 100%;
+      height: 11px;
       background: var(--bg-input);
-      border-radius: 9999px;
-      height: 10px;
-      overflow: hidden;
       border: 1px solid var(--border-color);
+      border-radius: 999px;
+      overflow: hidden;
     }
 
     .progress-bar-fill {
-      background: linear-gradient(90deg, #0284c7, #00e5ff);
       height: 100%;
       width: 0%;
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, #2563eb, #06b6d4);
+      transition: width 0.35s ease;
     }
 
     .feedback-box {
       background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--accent-blue);
       border-radius: 8px;
       padding: 12px;
-      border-left: 4px solid var(--accent-blue);
-      font-size: 13px;
-      min-height: 70px;
-    }
-
-    .feedback-box.error {
-      border-left-color: var(--accent-error);
-      background: rgba(239, 68, 68, 0.1);
-      color: #fca5a5;
+      font-size: 0.84rem;
+      min-height: 76px;
+      color: var(--text-main);
     }
 
     .feedback-box.success {
       border-left-color: var(--accent-success);
       background: rgba(16, 185, 129, 0.1);
-      color: #6ee7b7;
+      color: #a7f3d0;
     }
 
-    /* TAB 4: KUIS */
+    .feedback-box.error {
+      border-left-color: var(--accent-error);
+      background: rgba(239, 68, 68, 0.12);
+      color: #fecaca;
+    }
+
+    .inline-alert {
+      display: none;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--accent-error);
+      color: #fecaca;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .inline-alert.show {
+      display: block;
+    }
+
+    /* ==========================================================================
+       TAB 4: KUIS & TROUBLESHOOTING
+       ========================================================================== */
+    .quiz-wrapper {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .quiz-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .quiz-score-pill {
+      background: rgba(6, 182, 212, 0.16);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-neon);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
     .quiz-card {
-      background: var(--bg-card);
+      background: var(--bg-panel);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
+      border-radius: var(--radius);
       padding: 20px;
       margin-bottom: 16px;
+    }
+
+    .quiz-question {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
     }
 
     .quiz-options {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 12px;
     }
 
-    .quiz-option-btn {
+    .quiz-opt-btn {
       background: var(--bg-input);
       border: 1px solid var(--border-color);
-      padding: 10px 14px;
-      border-radius: 6px;
-      text-align: left;
       color: var(--text-main);
+      padding: 11px 14px;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 0.88rem;
       cursor: pointer;
-      font-size: 13.5px;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
-    .quiz-option-btn:hover {
-      border-color: var(--accent-blue);
-    }
-
-    .quiz-option-btn.selected {
+    .quiz-opt-btn:hover:not(:disabled) {
       border-color: var(--accent-neon);
-      background: rgba(0, 229, 255, 0.1);
+      background: var(--bg-card-hover);
     }
 
-    .quiz-option-btn.correct-ans {
+    .quiz-opt-btn.correct {
+      background: rgba(16, 185, 129, 0.18);
       border-color: var(--accent-success);
-      background: rgba(16, 185, 129, 0.2);
+      color: #a7f3d0;
+      font-weight: 700;
     }
 
-    .quiz-option-btn.wrong-ans {
+    .quiz-opt-btn.wrong {
+      background: rgba(239, 68, 68, 0.18);
       border-color: var(--accent-error);
-      background: rgba(239, 68, 68, 0.2);
+      color: #fecaca;
     }
 
-    /* MODALS */
+    .quiz-exp {
+      display: none;
+      margin-top: 12px;
+      padding: 11px 14px;
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid var(--accent-cyan);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.84rem;
+      color: #e2e8f0;
+    }
+
+    /* ==========================================================================
+       MODALS (ENSIKLOPEDIA, UEFI BIOS, SERTIFIKAT)
+       ========================================================================== */
     .modal-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
+      inset: 0;
+      background: rgba(0, 0, 0, 0.84);
+      backdrop-filter: blur(5px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      padding: 20px;
+      padding: 16px;
     }
 
-    .modal-content {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      max-width: 650px;
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--accent-cyan);
+      border-radius: 14px;
       width: 100%;
-      max-height: 90vh;
+      max-width: 680px;
+      max-height: 92vh;
       overflow-y: auto;
       padding: 24px;
       position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
     }
 
-    .close-modal-btn {
+    .modal-close {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 20px;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 1.1rem;
       cursor: pointer;
-    }
-
-    /* UEFI BIOS SCREEN MODAL */
-    .bios-screen {
-      background: #0000a8;
-      color: #ffffff;
-      font-family: monospace;
-      padding: 20px;
-      border: 4px double #ffffff;
-      border-radius: 4px;
-    }
-
-    .bios-header {
-      border-bottom: 2px solid #fff;
-      padding-bottom: 10px;
-      margin-bottom: 16px;
       display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      border-color: var(--accent-error);
+      color: var(--accent-error);
+    }
+
+    /* UEFI BIOS SCREEN */
+    .bios-window {
+      background: #030712;
+      border: 2px solid #38bdf8;
+      border-radius: 8px;
+      padding: 18px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #7dd3fc;
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    .bios-topbar {
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
+      gap: 8px;
+      color: #ffffff;
+      font-weight: bold;
     }
 
-    .fan-spinner {
-      animation: spin 1s linear infinite;
-      transform-origin: center;
+    .bios-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
 
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
+    @media (max-width: 640px) {
+      .bios-grid { grid-template-columns: 1fr; }
     }
 
-    /* SERTIFIKAT DESAIN */
-    .cert-frame {
+    .bios-box {
+      border: 1px solid #1e3a8a;
+      background: #0a1226;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    /* CERTIFICATE STYLES */
+    .cert-modal-box {
+      max-width: 820px;
+      background: #f8fafc;
+      color: #0f172a;
+      border: none;
+    }
+
+    .cert-sheet {
       background: #ffffff;
       color: #000000;
-      padding: 40px;
-      border: 10px double #1e293b;
-      border-radius: 4px;
+      border: 8px double #0f172a;
+      outline: 2px solid #334155;
+      outline-offset: -14px;
+      padding: 36px 40px;
       text-align: center;
-      font-family: 'Times New Roman', Times, serif;
+      font-family: 'Georgia', 'Times New Roman', serif;
     }
 
-    .cert-header h2 {
-      font-size: 24px;
-      text-transform: uppercase;
+    .cert-school {
+      font-size: 1.45rem;
+      font-weight: 800;
       letter-spacing: 1px;
       color: #0f172a;
+      text-transform: uppercase;
     }
 
-    .cert-header h3 {
-      font-size: 16px;
-      color: #475569;
-      margin-bottom: 20px;
+    .cert-dept {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #334155;
+      letter-spacing: 1.2px;
+      margin-top: 2px;
+      padding-bottom: 12px;
       border-bottom: 2px solid #0f172a;
-      padding-bottom: 10px;
     }
 
-    .cert-body {
-      margin: 24px 0;
-    }
-
-    .cert-name {
-      font-size: 26px;
-      font-weight: bold;
-      text-decoration: underline;
+    .cert-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-top: 18px;
       color: #1e3a8a;
-      margin: 10px 0;
+    }
+
+    .cert-student-name {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #1e3a8a;
+      display: inline-block;
+      padding: 4px 24px;
+      margin: 10px 0 6px;
+      text-transform: uppercase;
     }
 
     .cert-table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
-      font-family: var(--font-family);
-      font-size: 13px;
+      margin: 18px 0;
+      font-family: var(--font-sans);
+      font-size: 0.84rem;
     }
 
     .cert-table th, .cert-table td {
-      border: 1px solid #cbd5e1;
-      padding: 8px 12px;
+      border: 1px solid #94a3b8;
+      padding: 8px 10px;
       text-align: left;
+      color: #0f172a;
     }
 
     .cert-table th {
-      background: #f1f5f9;
+      background: #e2e8f0;
+      font-weight: 700;
     }
 
-    .cert-footer {
-      margin-top: 40px;
+    .cert-sign-row {
+      margin-top: 28px;
       display: flex;
       justify-content: space-between;
-      font-family: var(--font-family);
-      font-size: 13px;
+      align-items: flex-end;
+      text-align: left;
+      font-family: var(--font-sans);
+      font-size: 0.86rem;
+      color: #0f172a;
     }
 
-    /* PRINT STYLES FOR CERTIFICATE */
+    /* PRINT MEDIA QUERY: CLEAN WHITE CERTIFICATE ONLY */
     @media print {
       body * {
-        visibility: hidden;
+        visibility: hidden !important;
       }
-      #certificate-modal, #certificate-modal * {
-        visibility: visible;
+      #modal-cert, #modal-cert * {
+        visibility: visible !important;
       }
-      #certificate-modal {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+      #modal-cert {
+        position: fixed !important;
+        inset: 0 !important;
         background: #ffffff !important;
-        padding: 0;
+        padding: 0 !important;
+        margin: 0 !important;
         display: block !important;
       }
-      .modal-content {
+      .cert-modal-box {
         max-width: 100% !important;
-        border: none !important;
+        max-height: none !important;
+        overflow: visible !important;
         box-shadow: none !important;
         padding: 0 !important;
-        background: #fff !important;
+        background: #ffffff !important;
+      }
+      .cert-sheet {
+        border: 8px double #000000 !important;
+        color: #000000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
       .no-print {
         display: none !important;
@@ -677,1142 +1013,1253 @@
 </head>
 <body>
 
-  <!-- TOP RIBBON BANNER -->
-  <div class="top-ribbon">
+  <!-- ==========================================================================
+       1. BANNER IDENTITAS ATAS (TOP RIBBON)
+       ========================================================================== -->
+  <div class="top-ribbon no-print">
     <div class="ribbon-left">
+      <span class="ribbon-dot"></span>
       <span>@smkn1 petasia Kelas XI TKJ 2026 Ahyar</span>
     </div>
-    <div class="ribbon-right-badge">
-      TEKNIK KOMPUTER & JARINGAN
-    </div>
+    <div class="ribbon-badge">TEKNIK KOMPUTER &amp; JARINGAN</div>
   </div>
 
-  <!-- HEADER DASHBOARD -->
-  <header>
-    <div class="header-title">
-      <h1>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="2" y="2" width="20" height="8" rx="2"></rect>
-          <rect x="2" y="14" width="20" height="8" rx="2"></rect>
-          <line x1="6" y1="6" x2="6.01" y2="6"></line>
-          <line x1="6" y1="18" x2="6.01" y2="18"></line>
+  <!-- ==========================================================================
+       2. HEADER & TIMER MENGAJAR 120 MENIT
+       ========================================================================== -->
+  <header class="app-header no-print">
+    <div class="header-brand">
+      <div class="brand-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
         </svg>
-        Simulasi Perakitan Komputer (Sesi 2 Jam)
-      </h1>
-      <p>Modul Praktikum Interaktif Hardware Computer Assembly — SMKN 1 Petasia</p>
+      </div>
+      <div>
+        <h1>Simulasi Perakitan Komputer (Sesi 2 Jam)</h1>
+        <p>Modul Praktikum Interaktif Hardware Computer Assembly — SMKN 1 Petasia</p>
+      </div>
     </div>
 
     <div class="header-controls">
-      <div class="timer-box">
-        <span style="font-size:12px; color:var(--text-muted)">TIMER:</span>
-        <span class="timer-display" id="timer-text">120:00</span>
-        <button class="btn" id="btn-timer-toggle" onclick="toggleTimer()">Mulai</button>
-        <button class="btn" onclick="resetTimer()">Reset</button>
-      </div>
-
-      <button class="btn" id="btn-sound" onclick="toggleSound()">
-        🔊 Suara: ON
-      </button>
+      <span class="timer-label">Timer Sesi:</span>
+      <span class="timer-display" id="timer-display">120:00</span>
+      <button class="btn btn-primary" id="btn-timer-toggle" onclick="toggleTimer()">Mulai</button>
+      <button class="btn" onclick="resetTimer()">Reset</button>
+      <button class="btn" id="btn-sound-toggle" onclick="toggleSound()">🔊 Suara: ON</button>
     </div>
   </header>
 
-  <!-- NAV TABS -->
-  <nav class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab(1)">Tab 1: Alur & K3 (15M)</button>
-    <button class="tab-btn" onclick="switchTab(2)">Tab 2: Ensiklopedia Komponen (30M)</button>
-    <button class="tab-btn" onclick="switchTab(3)">Tab 3: Simulasi Rakit PC (55M)</button>
-    <button class="tab-btn" onclick="switchTab(4)">Tab 4: Kuis & Troubleshooting (20M)</button>
+  <!-- ==========================================================================
+       3. NAVIGASI 4 TAB
+       ========================================================================== -->
+  <nav class="nav-tabs no-print">
+    <button class="tab-btn active" data-tab="1" onclick="switchTab(1)">Tab 1: Alur &amp; K3 (15M)</button>
+    <button class="tab-btn" data-tab="2" onclick="switchTab(2)">Tab 2: Ensiklopedia Komponen (30M)</button>
+    <button class="tab-btn" data-tab="3" onclick="switchTab(3)">Tab 3: Simulasi Rakit PC (55M)</button>
+    <button class="tab-btn" data-tab="4" onclick="switchTab(4)">Tab 4: Kuis &amp; Troubleshooting (20M)</button>
   </nav>
 
-  <!-- MAIN CONTAINER -->
-  <main>
+  <!-- ==========================================================================
+       MAIN CONTENT
+       ========================================================================== -->
+  <main class="no-print">
 
-    <!-- TAB 1: ALUR & K3 -->
-    <div id="tab-1" class="tab-content active">
-      <h2 style="margin-bottom:16px; color:var(--accent-neon);">Alur Pembelajaran 120 Menit & Kesehatan Keselamatan Kerja (K3)</h2>
-      
+    <!-- ==================== TAB 1: ALUR & K3 (15M) ==================== -->
+    <section id="tab-1" class="tab-content active">
+      <h2 class="section-heading">Alur Pembelajaran 120 Menit &amp; Standar K3 Perakitan</h2>
+      <p class="section-sub">Panduan terstruktur sesi praktikum 2 jam untuk siswa kelas XI TKJ SMKN 1 Petasia.</p>
+
       <div class="timeline-grid">
         <div class="timeline-card">
-          <h3>Sesi 1: Alur & K3 ESD (15M)</h3>
-          <p>Pemahaman keselamatan kerja terhadap Pelepasan Muatan Electrostatic (ESD), penggunaan peralatan yang benar, serta alur praktikum.</p>
+          <span class="time-pill">SESI 1 • 15 MENIT</span>
+          <h3>Alur Praktikum &amp; K3 (ESD)</h3>
+          <p>Pengenalan keselamatan listrik, pencegahan kerusakan komponen akibat muatan elektrostatis (ESD), dan persiapan peralatan kerja.</p>
         </div>
         <div class="timeline-card">
-          <h3>Sesi 2: Ensiklopedia Hardware (30M)</h3>
-          <p>Mengenal fungsi spesifik, arsitektur fisik, bentuk soket LGA 1700, memori DDR5 Dual Channel, serta SSD M.2 NVMe PCIe 4.0.</p>
+          <span class="time-pill">SESI 2 • 30 MENIT</span>
+          <h3>Ensiklopedia 9 Komponen PC</h3>
+          <p>Identifikasi fisik &amp; spesifikasi CPU LGA 1700, Motherboard, Cooler, RAM DDR5, SSD M.2, VGA Card, LAN Card, PSU, dan Casing.</p>
         </div>
         <div class="timeline-card">
-          <h3>Sesi 3: Praktikum Perakitan (55M)</h3>
-          <p>Simulasi mandiri perakitan 9 langkah komponen utama secara berurutan langsung pada board ATX motherboard.</p>
+          <span class="time-pill">SESI 3 • 55 MENIT</span>
+          <h3>Simulasi Rakit PC Mandiri</h3>
+          <p>Praktik pemasangan 10 langkah berurutan pada motherboard ATX tanpa petunjuk kuning hingga pengujian POST &amp; layar UEFI BIOS.</p>
         </div>
         <div class="timeline-card">
-          <h3>Sesi 4: Troubleshooting & Sertifikat (20M)</h3>
-          <p>Uji POST BIOS, penyelesaian 8 kasus kendala hardware, dan penerbitan sertifikat hasil praktikum siswa.</p>
+          <span class="time-pill">SESI 4 • 20 MENIT</span>
+          <h3>Kuis Troubleshooting &amp; Sertifikat</h3>
+          <p>Evaluasi 8 studi kasus kerusakan nyata (No Display VGA, LAN Card tidak terdeteksi, Overheating) serta cetak sertifikat hasil praktik.</p>
         </div>
       </div>
 
-      <div class="k3-section">
-        <h3 style="color:var(--accent-blue); margin-bottom:10px;">Aturan Utama K3 Perakitan Komputer (Prosedur ESD)</h3>
-        <ul style="margin-left:20px; font-size:14px; color:var(--text-muted); display:flex; flex-direction:column; gap:6px;">
-          <li>Gunakan <strong>Gelang Anti-Statis (Anti-Static Wrist Strap)</strong> yang terhubung ke ground sasis untuk mencegah muatan listrik statis merusak IC mikroskopis.</li>
-          <li>Pegang komponen pada bagian tepi PCB / sasis, <strong>JANGAN menyentuh pin emas / kuningan</strong> RAM, PCIe GPU, atau pin soket CPU LGA 1700.</li>
-          <li>Gunakan alas kerja berbahan karet konduktif ESD dan pastikan sumber daya arus AC tersambung ke grounding listrik standar.</li>
-          <li>Gunakan obeng magnetik berkualitas tinggi untuk mencegah sekrup jatuh ke dalam sasis PC.</li>
-        </ul>
+      <div class="k3-layout">
+        <div class="panel-card">
+          <h3 style="color:var(--accent-gold); font-size:1.08rem;">Prosedur Wajib Keselamatan Kerja (K3)</h3>
+          <ul class="k3-list">
+            <li>
+              <strong>1. Pencegahan Electrostatic Discharge (ESD)</strong>
+              <span>Gunakan gelang anti-statis yang dijepitkan ke sasis logam ber-grounding sebelum menyentuh motherboard, RAM, VGA Card, atau LAN Card.</span>
+            </li>
+            <li>
+              <strong>2. Pemutusan Total Sumber Daya AC</strong>
+              <span>Pastikan kabel power PSU terlepas dari stopkontak dan saklar PSU pada posisi OFF (0) selama seluruh proses perakitan.</span>
+            </li>
+            <li>
+              <strong>3. Penanganan Pin Emas &amp; Soket LGA 1700</strong>
+              <span>Pegang komponen hanya pada tepi PCB. Hindari menyentuh pin soket motherboard atau jalur kuningan RAM/PCIe agar tidak bengkok atau teroksidasi.</span>
+            </li>
+            <li>
+              <strong>4. Aplikasi Thermal Paste &amp; Kerapian Kabel</strong>
+              <span>Oleskan pasta termal seukuran biji jagung di tengah IHS CPU, lepaskan plastik pelindung heatsink, dan rapikan kabel agar tidak mengenai kipas.</span>
+            </li>
+          </ul>
+        </div>
 
-        <h4 style="margin-top:20px; margin-bottom:12px; color:var(--text-main);">Peralatan Praktikum Utama:</h4>
-        <div class="tools-grid">
-          <div class="tool-card">
-            <svg viewBox="0 0 24 24"><path d="M19.7 4.3c-1.2-1.2-3.1-1.2-4.2 0L9.4 10.4l-2.1-2.1L3 12.6l4.2 4.2 4.3-4.3 6.1-6.1c1.2-1.1 1.2-3.1 0-4.2z"/></svg>
-            <div style="font-weight:bold; font-size:14px;">Obeng Magnetik PH2</div>
-            <div style="font-size:12px; color:var(--text-muted);">Memasang baut motherboard & cooler.</div>
-          </div>
-          <div class="tool-card">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v10M7 12h10"/></svg>
-            <div style="font-weight:bold; font-size:14px;">Gelang Anti-Statis</div>
-            <div style="font-size:12px; color:var(--text-muted);">Menetralkan muatan statis tubuh.</div>
-          </div>
-          <div class="tool-card">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
-            <div style="font-weight:bold; font-size:14px;">Thermal Paste</div>
-            <div style="font-size:12px; color:var(--text-muted);">Penghantar panas CPU ke Cooler.</div>
-          </div>
-          <div class="tool-card">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-            <div style="font-weight:bold; font-size:14px;">Alas Karet ESD</div>
-            <div style="font-size:12px; color:var(--text-muted);">Landasan perakitan komponen anti-gores.</div>
+        <div class="panel-card">
+          <h3 style="color:var(--accent-neon); font-size:1.08rem;">4 Peralatan Utama Perakitan</h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <svg viewBox="0 0 80 80">
+                <rect x="14" y="48" width="28" height="14" rx="5" fill="#0284c7" transform="rotate(-45 28 55)"/>
+                <rect x="34" y="31" width="32" height="6" rx="2" fill="#94a3b8" transform="rotate(-45 50 34)"/>
+                <polygon points="58,18 65,15 62,22" fill="#f59e0b"/>
+              </svg>
+              <h4>Obeng Magnetik (+PH2)</h4>
+              <p>Mengencangkan baut motherboard, VGA/LAN bracket, dan PSU tanpa jatuh.</p>
+            </div>
+            <div class="tool-card">
+              <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="22" fill="none" stroke="#06b6d4" stroke-width="7"/>
+                <rect x="34" y="13" width="12" height="10" rx="2" fill="#f59e0b"/>
+                <path d="M40 62 Q40 74 56 72" fill="none" stroke="#94a3b8" stroke-width="3" stroke-dasharray="3 2"/>
+              </svg>
+              <h4>Gelang Anti-Statis (ESD)</h4>
+              <p>Menyalurkan muatan listrik statis dari tubuh teknisi ke ground.</p>
+            </div>
+            <div class="tool-card">
+              <svg viewBox="0 0 80 80">
+                <rect x="26" y="16" width="28" height="36" rx="4" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+                <rect x="34" y="52" width="12" height="12" fill="#475569"/>
+                <circle cx="40" cy="70" r="4" fill="#38bdf8"/>
+                <rect x="33" y="8" width="14" height="8" rx="2" fill="#0284c7"/>
+              </svg>
+              <h4>Thermal Paste</h4>
+              <p>Mengisi pori mikro udara antara IHS CPU dan alas tembaga cooler.</p>
+            </div>
+            <div class="tool-card">
+              <svg viewBox="0 0 80 80">
+                <rect x="10" y="20" width="60" height="40" rx="5" fill="#1e293b" stroke="#10b981" stroke-width="3"/>
+                <line x1="18" y1="30" x2="62" y2="30" stroke="#334155" stroke-width="2"/>
+                <line x1="18" y1="40" x2="62" y2="40" stroke="#334155" stroke-width="2"/>
+                <line x1="18" y1="50" x2="62" y2="50" stroke="#334155" stroke-width="2"/>
+              </svg>
+              <h4>Alas Karet Anti-Statis</h4>
+              <p>Permukaan kerja isolator yang melindungi jalur PCB dari korsleting.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- TAB 2: ENSIKLOPEDIA -->
-    <div id="tab-2" class="tab-content">
-      <h2 style="margin-bottom:16px; color:var(--accent-neon);">Ensiklopedia Komponen Hardware PC (ATX LGA 1700)</h2>
-      <div class="encyclo-grid" id="encyclo-container">
-        <!-- Generated by JS -->
-      </div>
-    </div>
+    <!-- ==================== TAB 2: ENSIKLOPEDIA KOMPONEN (30M) ==================== -->
+    <section id="tab-2" class="tab-content">
+      <h2 class="section-heading">Ensiklopedia 9 Komponen Utama PC</h2>
+      <p class="section-sub">Klik pada setiap kartu komponen untuk melihat fungsi detail, spesifikasi teknis, serta Tips Guru &amp; Kesalahan Umum Siswa.</p>
+      <div class="encyclo-grid" id="encyclo-grid"></div>
+    </section>
 
-    <!-- TAB 3: SIMULASI RAKIT PC -->
-    <div id="tab-3" class="tab-content">
+    <!-- ==================== TAB 3: SIMULASI RAKIT PC (55M) ==================== -->
+    <section id="tab-3" class="tab-content">
       <div class="sim-layout">
-        
-        <!-- KOLOM KIRI: DAFTAR KOMPONEN -->
+
+        <!-- KOLOM KIRI: DAFTAR 10 KOMPONEN BERURUTAN -->
         <div class="sim-panel">
-          <h3 style="font-size:15px; color:var(--accent-neon);">Daftar Komponen</h3>
-          <p style="font-size:12px; color:var(--text-muted);">Pilih komponen secara berurutan, lalu klik lokasi slot yang tepat pada Motherboard.</p>
-          <div class="comp-list" id="comp-list">
-            <!-- Rendered by JS -->
+          <div class="sim-panel-title">
+            <span>Daftar 10 Komponen</span>
+            <span id="left-counter" style="font-size:0.78rem; color:var(--accent-gold);">0/10</span>
           </div>
+          <p style="font-size:0.78rem; color:var(--text-muted);">
+            Pasang komponen secara berurutan (1 s.d. 10) dengan mengklik lokasi slot yang sesuai pada papan Motherboard.
+          </p>
+          <div class="comp-list" id="comp-list"></div>
         </div>
 
-        <!-- KOLOM TENGAH: MOTHERBOARD SVG INTERAKTIF -->
-        <div class="sim-panel" style="align-items:center;">
-          <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span style="font-size:14px; font-weight:bold; color:var(--text-main);">Papan Motherboard ATX LGA 1700</span>
-            <span style="font-size:11px; color:var(--accent-neon);">Tanpa Penunjuk Visual (Mandiri)</span>
+        <!-- KOLOM TENGAH: MOTHERBOARD ATX LGA 1700 INTERAKTIF (3-LAYER SVG TANPA HINT KUNING) -->
+        <div class="sim-panel">
+          <div class="sim-panel-title">
+            <span>Papan Motherboard ATX LGA 1700</span>
+            <span style="font-size:0.74rem; color:var(--text-muted);">Mode Mandiri (Tanpa Petunjuk Kuning)</span>
           </div>
 
-          <div class="board-container" style="width:100%;">
-            <svg class="motherboard-svg" viewBox="0 0 600 600" id="main-mb-svg">
-              
-              <!-- LAYER 1: BOARD BASE & SILKSCREEN LABELS REALISTIS -->
-              <g id="layer-board">
-                <!-- PCB Main Body -->
-                <rect x="30" y="20" width="540" height="560" rx="12" fill="#0b1320" stroke="#1e293b" stroke-width="4"/>
-                <path d="M 40 30 L 560 30 L 560 570 L 40 570 Z" fill="none" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="4 4"/>
-                
-                <!-- Mounting Screw Holes -->
-                <circle cx="50" cy="40" r="7" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
-                <circle cx="550" cy="40" r="7" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
-                <circle cx="50" cy="300" r="7" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
-                <circle cx="550" cy="300" r="7" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
-                <circle cx="50" cy="560" r="7" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
-                <circle cx="550" cy="560" r="7" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
-
-                <!-- VRM Heatsinks -->
-                <rect x="70" y="50" width="100" height="40" fill="#1e293b" rx="4" stroke="#334155"/>
-                <rect x="60" y="100" width="40" height="120" fill="#1e293b" rx="4" stroke="#334155"/>
-                <text x="75" y="75" fill="#475569" font-size="10" font-weight="bold">VRM POWER</text>
-
-                <!-- LGA 1700 CPU Socket Area -->
-                <rect x="180" y="90" width="140" height="140" fill="#1e293b" rx="6" stroke="#475569" stroke-width="2"/>
-                <rect x="195" y="105" width="110" height="110" fill="#0f172a" rx="2" stroke="#334155"/>
-                <!-- Pins texture -->
-                <pattern id="pins" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+          <div class="board-wrapper">
+            <svg class="motherboard-svg" viewBox="0 0 600 620" xmlns="http://www.w3.org/2000/svg" id="mobo-svg">
+              <defs>
+                <pattern id="lgaPinsPattern" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
                   <circle cx="3" cy="3" r="1" fill="#475569"/>
                 </pattern>
-                <rect x="200" y="110" width="100" height="100" fill="url(#pins)"/>
-                <!-- Socket Lever -->
-                <rect x="325" y="95" width="8" height="130" fill="#64748b" rx="2"/>
-                <text x="210" y="82" fill="#94a3b8" font-size="11" font-weight="bold">LGA 1700</text>
-                <!-- Cooler Screw Holes -->
-                <circle cx="170" cy="80" r="5" fill="#334155"/>
-                <circle cx="330" cy="80" r="5" fill="#334155"/>
-                <circle cx="170" cy="240" r="5" fill="#334155"/>
-                <circle cx="330" cy="240" r="5" fill="#334155"/>
+              </defs>
 
-                <!-- DDR5 RAM Slots (A1, A2, B1, B2) -->
-                <!-- A1 -->
-                <rect x="370" y="60" width="16" height="190" fill="#0f172a" stroke="#334155" rx="2"/>
-                <text x="372" y="52" fill="#64748b" font-size="9">A1</text>
-                <!-- A2 -->
-                <rect x="395" y="60" width="16" height="190" fill="#0f172a" stroke="#0284c7" stroke-width="1.5" rx="2"/>
-                <text x="396" y="52" fill="#38bdf8" font-size="9" font-weight="bold">A2</text>
-                <!-- B1 -->
-                <rect x="420" y="60" width="16" height="190" fill="#0f172a" stroke="#334155" rx="2"/>
-                <text x="422" y="52" fill="#64748b" font-size="9">B1</text>
-                <!-- B2 -->
-                <rect x="445" y="60" width="16" height="190" fill="#0f172a" stroke="#0284c7" stroke-width="1.5" rx="2"/>
-                <text x="446" y="52" fill="#38bdf8" font-size="9" font-weight="bold">B2</text>
-                
-                <text x="385" y="265" fill="#94a3b8" font-size="10" font-weight="bold">DDR5 DUAL CHANNEL</text>
+              <!-- ==================== LAYER 1: BOARD BASE & SILKSCREEN ==================== -->
+              <g id="layer-board">
+                <!-- PCB Base -->
+                <rect x="25" y="18" width="550" height="584" rx="12" fill="#0b1322" stroke="#1e3a5f" stroke-width="4"/>
+                <rect x="35" y="28" width="530" height="564" rx="8" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="5 5"/>
 
-                <!-- ATX 24-Pin Connector Header -->
-                <rect x="485" y="80" width="35" height="150" fill="#0f172a" stroke="#475569" stroke-width="2" rx="3"/>
-                <!-- 24 pins -->
-                <g fill="#fbbf24">
-                  <rect x="490" y="88" width="10" height="8" rx="1"/><rect x="505" y="88" width="10" height="8" rx="1"/>
-                  <rect x="490" y="100" width="10" height="8" rx="1"/><rect x="505" y="100" width="10" height="8" rx="1"/>
-                  <rect x="490" y="112" width="10" height="8" rx="1"/><rect x="505" y="112" width="10" height="8" rx="1"/>
-                  <rect x="490" y="124" width="10" height="8" rx="1"/><rect x="505" y="124" width="10" height="8" rx="1"/>
-                  <rect x="490" y="136" width="10" height="8" rx="1"/><rect x="505" y="136" width="10" height="8" rx="1"/>
-                  <rect x="490" y="148" width="10" height="8" rx="1"/><rect x="505" y="148" width="10" height="8" rx="1"/>
-                  <rect x="490" y="160" width="10" height="8" rx="1"/><rect x="505" y="160" width="10" height="8" rx="1"/>
-                  <rect x="490" y="172" width="10" height="8" rx="1"/><rect x="505" y="172" width="10" height="8" rx="1"/>
-                  <rect x="490" y="184" width="10" height="8" rx="1"/><rect x="505" y="184" width="10" height="8" rx="1"/>
-                  <rect x="490" y="196" width="10" height="8" rx="1"/><rect x="505" y="196" width="10" height="8" rx="1"/>
-                  <rect x="490" y="208" width="10" height="8" rx="1"/><rect x="505" y="208" width="10" height="8" rx="1"/>
-                  <rect x="490" y="220" width="10" height="8" rx="1"/><rect x="505" y="220" width="10" height="8" rx="1"/>
+                <!-- PCB Traces -->
+                <path d="M120 155 H180 M325 155 H370 M300 245 V275 M300 310 V340 M480 245 V380" stroke="#172554" stroke-width="2" fill="none"/>
+
+                <!-- Standoff Mounting Holes -->
+                <circle cx="45" cy="38" r="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+                <circle cx="555" cy="38" r="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+                <circle cx="45" cy="310" r="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+                <circle cx="555" cy="310" r="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+                <circle cx="45" cy="582" r="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+                <circle cx="555" cy="582" r="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+
+                <!-- Rear I/O Panel -->
+                <rect x="38" y="55" width="52" height="175" rx="4" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="64" y="142" fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle" transform="rotate(-90 64 142)">REAR I/O</text>
+
+                <!-- VRM Heatsink Top -->
+                <rect x="105" y="38" width="160" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                <text x="185" y="53" fill="#64748b" font-size="9" font-weight="bold" text-anchor="middle">VRM HEATSINK</text>
+
+                <!-- LGA 1700 CPU Socket -->
+                <rect x="180" y="88" width="140" height="140" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+                <rect x="195" y="103" width="110" height="110" rx="2" fill="#0f172a" stroke="#334155"/>
+                <rect x="200" y="108" width="100" height="100" fill="url(#lgaPinsPattern)"/>
+                <!-- Socket Retention Lever -->
+                <rect x="325" y="92" width="7" height="130" rx="2" fill="#94a3b8"/>
+                <!-- Cooler Mounting Holes -->
+                <circle cx="168" cy="76" r="4.5" fill="#475569"/>
+                <circle cx="332" cy="76" r="4.5" fill="#475569"/>
+                <circle cx="168" cy="240" r="4.5" fill="#475569"/>
+                <circle cx="332" cy="240" r="4.5" fill="#475569"/>
+                <text x="250" y="80" fill="#cbd5e1" font-size="11" font-weight="bold" text-anchor="middle">LGA 1700</text>
+
+                <!-- 4 RAM DDR5 Slots (A1, A2, B1, B2) -->
+                <rect x="370" y="62" width="14" height="186" rx="2" fill="#0f172a" stroke="#334155"/>
+                <text x="377" y="54" fill="#64748b" font-size="9" font-weight="bold" text-anchor="middle">A1</text>
+
+                <rect x="395" y="62" width="14" height="186" rx="2" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+                <text x="402" y="54" fill="#38bdf8" font-size="9" font-weight="bold" text-anchor="middle">A2</text>
+
+                <rect x="420" y="62" width="14" height="186" rx="2" fill="#0f172a" stroke="#334155"/>
+                <text x="427" y="54" fill="#64748b" font-size="9" font-weight="bold" text-anchor="middle">B1</text>
+
+                <rect x="445" y="62" width="14" height="186" rx="2" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+                <text x="452" y="54" fill="#38bdf8" font-size="9" font-weight="bold" text-anchor="middle">B2</text>
+
+                <text x="415" y="262" fill="#94a3b8" font-size="9" font-weight="bold" text-anchor="middle">DDR5 DIMM</text>
+
+                <!-- ATX 24-Pin Power Header -->
+                <rect x="490" y="80" width="34" height="154" rx="3" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+                <g fill="#d97706">
+                  <rect x="496" y="88" width="8" height="7" rx="1"/><rect x="510" y="88" width="8" height="7" rx="1"/>
+                  <rect x="496" y="100" width="8" height="7" rx="1"/><rect x="510" y="100" width="8" height="7" rx="1"/>
+                  <rect x="496" y="112" width="8" height="7" rx="1"/><rect x="510" y="112" width="8" height="7" rx="1"/>
+                  <rect x="496" y="124" width="8" height="7" rx="1"/><rect x="510" y="124" width="8" height="7" rx="1"/>
+                  <rect x="496" y="136" width="8" height="7" rx="1"/><rect x="510" y="136" width="8" height="7" rx="1"/>
+                  <rect x="496" y="148" width="8" height="7" rx="1"/><rect x="510" y="148" width="8" height="7" rx="1"/>
+                  <rect x="496" y="160" width="8" height="7" rx="1"/><rect x="510" y="160" width="8" height="7" rx="1"/>
+                  <rect x="496" y="172" width="8" height="7" rx="1"/><rect x="510" y="172" width="8" height="7" rx="1"/>
+                  <rect x="496" y="184" width="8" height="7" rx="1"/><rect x="510" y="184" width="8" height="7" rx="1"/>
+                  <rect x="496" y="196" width="8" height="7" rx="1"/><rect x="510" y="196" width="8" height="7" rx="1"/>
+                  <rect x="496" y="208" width="8" height="7" rx="1"/><rect x="510" y="208" width="8" height="7" rx="1"/>
+                  <rect x="496" y="220" width="8" height="7" rx="1"/><rect x="510" y="220" width="8" height="7" rx="1"/>
                 </g>
-                <text x="480" y="72" fill="#94a3b8" font-size="9" font-weight="bold">ATX 24-PIN</text>
+                <text x="507" y="72" fill="#cbd5e1" font-size="9" font-weight="bold" text-anchor="middle">ATX 24-PIN</text>
 
-                <!-- Storage M.2 NVMe Slot -->
-                <rect x="180" y="275" width="160" height="35" fill="#0f172a" stroke="#475569" stroke-width="1.5" rx="3"/>
-                <rect x="185" y="282" width="15" height="20" fill="#334155"/>
-                <circle cx="330" cy="292" r="4" fill="#64748b"/>
-                <text x="210" y="297" fill="#94a3b8" font-size="10" font-weight="bold">M.2 NVMe PCIe 4.0</text>
+                <!-- M.2 NVMe Slot -->
+                <rect x="175" y="272" width="165" height="32" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+                <rect x="180" y="278" width="12" height="20" fill="#334155"/>
+                <circle cx="330" cy="288" r="4" fill="#64748b"/>
+                <text x="260" y="292" fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle">M.2 NVMe</text>
 
-                <!-- PCIe x16 Slot (GPU) -->
-                <rect x="110" y="340" width="280" height="30" fill="#0f172a" stroke="#475569" stroke-width="2" rx="3"/>
-                <rect x="115" y="350" width="260" height="10" fill="#1e293b"/>
-                <text x="120" y="333" fill="#94a3b8" font-size="10" font-weight="bold">PCIe 5.0 x16 SLOT</text>
+                <!-- PCIe x16 Slot (VGA Card) -->
+                <rect x="105" y="342" width="275" height="24" rx="3" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+                <rect x="112" y="350" width="256" height="8" fill="#1e293b"/>
+                <rect x="374" y="344" width="10" height="20" rx="2" fill="#475569"/>
+                <text x="242" y="334" fill="#cbd5e1" font-size="10" font-weight="bold" text-anchor="middle">PCIe x16 (VGA)</text>
 
-                <!-- PCIe x4 Slot Secondary -->
-                <rect x="110" y="420" width="200" height="22" fill="#0f172a" stroke="#334155" rx="3"/>
+                <!-- PCIe x1 Slot (LAN Card / NIC) — Berjarak aman di bawah PCIe x16 -->
+                <rect x="105" y="438" width="145" height="20" rx="3" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+                <rect x="112" y="445" width="130" height="6" fill="#1e293b"/>
+                <text x="178" y="430" fill="#cbd5e1" font-size="10" font-weight="bold" text-anchor="middle">PCIe x1 (LAN)</text>
 
                 <!-- Chipset Heatsink -->
-                <rect x="410" y="380" width="110" height="100" fill="#1e293b" stroke="#334155" stroke-width="2" rx="6"/>
-                <text x="435" y="435" fill="#64748b" font-size="13" font-weight="bold">CHIPSET</text>
+                <rect x="415" y="370" width="115" height="105" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                <text x="472" y="427" fill="#64748b" font-size="13" font-weight="bold" text-anchor="middle">CHIPSET</text>
 
                 <!-- Front Panel Header (F_PANEL) -->
-                <rect x="420" y="505" width="80" height="25" fill="#0f172a" stroke="#475569" stroke-width="1.5" rx="2"/>
-                <g fill="#fbbf24">
-                  <circle cx="430" cy="512" r="2"/><circle cx="440" cy="512" r="2"/><circle cx="450" cy="512" r="2"/><circle cx="460" cy="512" r="2"/><circle cx="470" cy="512" r="2"/>
-                  <circle cx="430" cy="522" r="2"/><circle cx="440" cy="522" r="2"/><circle cx="450" cy="522" r="2"/><circle cx="460" cy="522" r="2"/><circle cx="470" cy="522" r="2"/>
+                <rect x="425" y="522" width="90" height="26" rx="3" fill="#0f172a" stroke="#64748b" stroke-width="1.5"/>
+                <g fill="#d97706">
+                  <circle cx="436" cy="530" r="2.2"/><circle cx="448" cy="530" r="2.2"/><circle cx="460" cy="530" r="2.2"/><circle cx="472" cy="530" r="2.2"/><circle cx="484" cy="530" r="2.2"/>
+                  <circle cx="436" cy="540" r="2.2"/><circle cx="448" cy="540" r="2.2"/><circle cx="460" cy="540" r="2.2"/><circle cx="472" cy="540" r="2.2"/><circle cx="484" cy="540" r="2.2"/>
                 </g>
-                <text x="432" y="543" fill="#94a3b8" font-size="9" font-weight="bold">F_PANEL (POWER SW)</text>
+                <text x="470" y="562" fill="#cbd5e1" font-size="9.5" font-weight="bold" text-anchor="middle">F_PANEL</text>
+
+                <!-- Power Status LED Indicator -->
+                <circle id="mb-power-led" cx="535" cy="535" r="6" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+                <text x="535" y="553" fill="#64748b" font-size="8" text-anchor="middle">PWR_LED</text>
               </g>
 
-              <!-- LAYER 2: INSTALLED COMPONENTS (pointer-events: none WAJIB) -->
-              <g id="layer-installed">
+              <!-- ==================== LAYER 2: INSTALLED COMPONENTS (pointer-events: none) ==================== -->
+              <g id="layer-installed" pointer-events="none">
                 <!-- 1. CPU Installed -->
-                <g id="installed-cpu" style="display:none;">
-                  <rect x="195" y="105" width="110" height="110" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" rx="3"/>
-                  <rect x="220" y="130" width="60" height="60" fill="#94a3b8" rx="2"/>
-                  <text x="228" y="165" fill="#1e293b" font-size="12" font-weight="bold">INTEL i7</text>
-                  <text x="226" y="178" fill="#334155" font-size="8">LGA 1700</text>
+                <g id="vis-cpu" style="display:none;">
+                  <rect x="195" y="103" width="110" height="110" rx="4" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2.5"/>
+                  <rect x="214" y="122" width="72" height="72" rx="3" fill="#94a3b8"/>
+                  <polygon points="198,210 208,210 198,200" fill="#f59e0b"/>
+                  <text x="250" y="156" fill="#0f172a" font-size="11" font-weight="bold" text-anchor="middle">INTEL Core i7</text>
+                  <text x="250" y="170" fill="#1e293b" font-size="8.5" font-weight="bold" text-anchor="middle">LGA 1700</text>
                 </g>
 
                 <!-- 2. Thermal Paste Installed -->
-                <g id="installed-paste" style="display:none;">
-                  <circle cx="250" cy="160" r="14" fill="#94a3b8" opacity="0.9"/>
-                  <circle cx="242" cy="154" r="8" fill="#cbd5e1" opacity="0.8"/>
-                  <circle cx="256" cy="165" r="9" fill="#cbd5e1" opacity="0.8"/>
+                <g id="vis-paste" style="display:none;">
+                  <circle cx="250" cy="158" r="14" fill="#64748b" stroke="#e2e8f0" stroke-width="1.5"/>
+                  <circle cx="246" cy="154" r="5" fill="#cbd5e1"/>
                 </g>
 
                 <!-- 3. CPU Cooler Installed -->
-                <g id="installed-cooler" style="display:none;">
-                  <rect x="160" y="70" width="180" height="180" fill="#1e293b" stroke="#3b82f6" stroke-width="3" rx="12"/>
-                  <circle cx="250" cy="160" r="70" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-                  <!-- Fan Blades -->
-                  <g id="cooler-fan-blades">
-                    <circle cx="250" cy="160" r="25" fill="#38bdf8"/>
-                    <path d="M 250 135 Q 275 110 285 135 Q 260 160 250 135 Z" fill="#0284c7"/>
-                    <path d="M 275 160 Q 300 185 275 195 Q 250 170 275 160 Z" fill="#0284c7"/>
-                    <path d="M 250 185 Q 225 210 215 185 Q 240 160 250 185 Z" fill="#0284c7"/>
-                    <path d="M 225 160 Q 200 135 225 125 Q 250 150 225 160 Z" fill="#0284c7"/>
+                <g id="vis-cooler" style="display:none;">
+                  <rect x="165" y="73" width="170" height="170" rx="12" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                  <circle cx="250" cy="158" r="64" fill="#0f172a" stroke="#0284c7" stroke-width="3"/>
+                  <g id="cpu-fan-blades">
+                    <path d="M250 158 L250 104 A54 54 0 0 1 288 120 Z" fill="#38bdf8" opacity="0.85"/>
+                    <path d="M250 158 L304 158 A54 54 0 0 1 288 196 Z" fill="#38bdf8" opacity="0.85"/>
+                    <path d="M250 158 L250 212 A54 54 0 0 1 212 196 Z" fill="#38bdf8" opacity="0.85"/>
+                    <path d="M250 158 L196 158 A54 54 0 0 1 212 120 Z" fill="#38bdf8" opacity="0.85"/>
                   </g>
-                  <text x="212" y="78" fill="#38bdf8" font-size="9" font-weight="bold">TOWER COOLER 120MM</text>
+                  <circle cx="250" cy="158" r="18" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+                  <text x="250" y="161" fill="#22d3ee" font-size="8" font-weight="bold" text-anchor="middle">COOLER</text>
                 </g>
 
-                <!-- 4. RAM A2 Installed -->
-                <g id="installed-ram1" style="display:none;">
-                  <rect x="393" y="55" width="20" height="200" fill="#0284c7" stroke="#38bdf8" stroke-width="2" rx="3"/>
-                  <rect x="397" y="120" width="12" height="40" fill="#1e293b"/>
-                  <text x="398" y="100" fill="#ffffff" font-size="8" font-weight="bold" transform="rotate(90 398 100)">DDR5 16GB</text>
+                <!-- 4. RAM Slot A2 Installed -->
+                <g id="vis-ram-a2" style="display:none;">
+                  <rect x="393" y="58" width="18" height="194" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+                  <rect x="397" y="110" width="10" height="45" fill="#0f172a"/>
+                  <text x="402" y="96" fill="#ffffff" font-size="7.5" font-weight="bold" text-anchor="middle" transform="rotate(90 402 96)">DDR5 16GB</text>
                 </g>
 
-                <!-- 5. RAM B2 Installed -->
-                <g id="installed-ram2" style="display:none;">
-                  <rect x="443" y="55" width="20" height="200" fill="#0284c7" stroke="#38bdf8" stroke-width="2" rx="3"/>
-                  <rect x="447" y="120" width="12" height="40" fill="#1e293b"/>
-                  <text x="448" y="100" fill="#ffffff" font-size="8" font-weight="bold" transform="rotate(90 448 100)">DDR5 16GB</text>
+                <!-- 5. RAM Slot B2 Installed -->
+                <g id="vis-ram-b2" style="display:none;">
+                  <rect x="443" y="58" width="18" height="194" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+                  <rect x="447" y="110" width="10" height="45" fill="#0f172a"/>
+                  <text x="452" y="96" fill="#ffffff" font-size="7.5" font-weight="bold" text-anchor="middle" transform="rotate(90 452 96)">DDR5 16GB</text>
                 </g>
 
-                <!-- 6. SSD M.2 Installed -->
-                <g id="installed-ssd" style="display:none;">
-                  <rect x="190" y="280" width="140" height="24" fill="#059669" stroke="#34d399" stroke-width="1.5" rx="2"/>
-                  <rect x="290" y="284" width="30" height="16" fill="#0f172a"/>
-                  <text x="200" y="296" fill="#ffffff" font-size="9" font-weight="bold">NVMe M.2 1TB</text>
+                <!-- 6. SSD M.2 NVMe Installed -->
+                <g id="vis-m2" style="display:none;">
+                  <rect x="180" y="274" width="155" height="28" rx="3" fill="#047857" stroke="#34d399" stroke-width="2"/>
+                  <rect x="296" y="279" width="28" height="18" rx="2" fill="#0f172a"/>
+                  <circle cx="330" cy="288" r="3.5" fill="#fbbf24"/>
+                  <text x="238" y="292" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">NVMe SSD 1TB</text>
                 </g>
 
-                <!-- 7. GPU PCIe Installed -->
-                <g id="installed-gpu" style="display:none;">
-                  <rect x="90" y="325" width="320" height="75" fill="#1e1b4b" stroke="#6366f1" stroke-width="3" rx="6"/>
-                  <!-- GPU Fans -->
-                  <g id="gpu-fan-1">
-                    <circle cx="160" cy="362" r="25" fill="#0f172a" stroke="#818cf8" stroke-width="2"/>
-                    <circle cx="160" cy="362" r="8" fill="#818cf8"/>
+                <!-- 7. VGA Card / GPU Dual-Fan (PCIe x16) Installed -->
+                <g id="vis-vga" style="display:none;">
+                  <rect x="85" y="332" width="305" height="62" rx="7" fill="#1e1b4b" stroke="#6366f1" stroke-width="3"/>
+                  <rect x="80" y="335" width="8" height="56" rx="2" fill="#94a3b8"/>
+                  <!-- Dual Fan VGA -->
+                  <circle cx="155" cy="363" r="22" fill="#0f172a" stroke="#818cf8" stroke-width="2"/>
+                  <g id="vga-fan-1">
+                    <line x1="155" y1="344" x2="155" y2="382" stroke="#818cf8" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="136" y1="363" x2="174" y2="363" stroke="#818cf8" stroke-width="3.5" stroke-linecap="round"/>
                   </g>
-                  <g id="gpu-fan-2">
-                    <circle cx="280" cy="362" r="25" fill="#0f172a" stroke="#818cf8" stroke-width="2"/>
-                    <circle cx="280" cy="362" r="8" fill="#818cf8"/>
+                  <circle cx="245" cy="363" r="22" fill="#0f172a" stroke="#818cf8" stroke-width="2"/>
+                  <g id="vga-fan-2">
+                    <line x1="245" y1="344" x2="245" y2="382" stroke="#818cf8" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="226" y1="363" x2="264" y2="363" stroke="#818cf8" stroke-width="3.5" stroke-linecap="round"/>
                   </g>
-                  <text x="330" y="367" fill="#c7d2fe" font-size="10" font-weight="bold">RTX GPU</text>
+                  <text x="332" y="359" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">VGA CARD</text>
+                  <text x="332" y="372" fill="#38bdf8" font-size="8" font-weight="bold" text-anchor="middle">RTX PCIe x16</text>
                 </g>
 
-                <!-- 8. ATX 24-Pin Cable Installed -->
-                <g id="installed-atx24" style="display:none;">
-                  <rect x="480" y="75" width="45" height="160" fill="#dc2626" stroke="#f87171" stroke-width="2" rx="4"/>
-                  <!-- Cables bundle -->
-                  <path d="M 502 235 Q 520 270 540 270" stroke="#fbbf24" stroke-width="6" fill="none"/>
-                  <path d="M 492 235 Q 510 270 540 275" stroke="#10b981" stroke-width="6" fill="none"/>
-                  <path d="M 512 235 Q 530 270 540 265" stroke="#2563eb" stroke-width="6" fill="none"/>
-                  <text x="485" y="150" fill="#ffffff" font-size="9" font-weight="bold" transform="rotate(90 485 150)">ATX POWER CONNECTED</text>
+                <!-- 8. LAN Card / NIC (PCIe x1) Installed dengan Port RJ-45 -->
+                <g id="vis-lan" style="display:none;">
+                  <rect x="88" y="427" width="170" height="44" rx="5" fill="#064e3b" stroke="#10b981" stroke-width="2.5"/>
+                  <!-- Metal Bracket & RJ-45 Port -->
+                  <rect x="82" y="429" width="10" height="40" rx="1.5" fill="#cbd5e1"/>
+                  <rect x="92" y="438" width="22" height="22" rx="2" fill="#334155" stroke="#94a3b8" stroke-width="1.5"/>
+                  <rect x="96" y="443" width="12" height="12" fill="#0f172a"/>
+                  <!-- LAN Controller Chip -->
+                  <rect x="132" y="438" width="24" height="22" rx="2" fill="#0f172a" stroke="#34d399"/>
+                  <!-- Link/Act LED -->
+                  <circle id="lan-link-led" cx="118" cy="442" r="3" fill="#475569"/>
+                  <text x="206" y="447" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">LAN CARD</text>
+                  <text x="206" y="459" fill="#6ee7b7" font-size="7.5" font-weight="bold" text-anchor="middle">GbE RJ-45</text>
                 </g>
 
-                <!-- 9. Front Panel Cable Installed -->
-                <g id="installed-fpanel" style="display:none;">
-                  <rect x="420" y="500" width="80" height="35" fill="#2563eb" stroke="#60a5fa" stroke-width="2" rx="3"/>
-                  <text x="428" y="522" fill="#ffffff" font-size="9" font-weight="bold">POWER SW</text>
+                <!-- 9. Kabel Power Main ATX 24-Pin Installed -->
+                <g id="vis-atx24" style="display:none;">
+                  <rect x="486" y="76" width="42" height="162" rx="4" fill="#b91c1c" stroke="#f87171" stroke-width="2"/>
+                  <path d="M507 238 Q528 265 552 268" stroke="#f59e0b" stroke-width="5" fill="none"/>
+                  <path d="M498 238 Q520 272 552 276" stroke="#10b981" stroke-width="5" fill="none"/>
+                  <path d="M516 238 Q536 258 552 260" stroke="#3b82f6" stroke-width="5" fill="none"/>
+                  <text x="507" y="158" fill="#ffffff" font-size="8.5" font-weight="bold" text-anchor="middle" transform="rotate(90 507 158)">ATX 24-PIN OK</text>
                 </g>
 
+                <!-- 10. Kabel Front Panel (Power SW) Installed -->
+                <g id="vis-fpanel" style="display:none;">
+                  <rect x="424" y="518" width="92" height="34" rx="4" fill="#1d4ed8" stroke="#60a5fa" stroke-width="2"/>
+                  <text x="470" y="538" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">POWER SW OK</text>
+                </g>
               </g>
 
-              <!-- LAYER 3: HITBOXES ANTI-BENTROK (7 ZONA KUNCI TERTENTU) -->
+              <!-- ==================== LAYER 3: 8 HITBOX TRANSPARAN ANTI-BENTROK ==================== -->
               <g id="layer-hitboxes">
-                <!-- Zone CPU (Menutupi Socket CPU & Cooler Mounting Holes untuk Step 1, 2, dan 3) -->
-                <rect id="zone-cpu" x="155" y="65" width="190" height="190" rx="8" onclick="handleSlotClick('zone-cpu')"/>
+                <!-- 1. zone-cpu: Langkah 1 (CPU), 2 (Thermal Paste), 3 (CPU Cooler) | X[155..345], Y[65..250] -->
+                <rect id="zone-cpu" x="155" y="65" width="190" height="185" rx="8" onclick="handleSlotClick('zone-cpu')"/>
 
-                <!-- Zone RAM A2 (Step 4) -->
-                <rect id="zone-ram-a2" x="388" y="50" width="28" height="210" rx="4" onclick="handleSlotClick('zone-ram-a2')"/>
+                <!-- 2. zone-ram-a2: Langkah 4 (RAM Slot A2) | X[388..416], Y[55..255] -->
+                <rect id="zone-ram-a2" x="388" y="55" width="28" height="200" rx="4" onclick="handleSlotClick('zone-ram-a2')"/>
 
-                <!-- Zone RAM B2 (Step 5) -->
-                <rect id="zone-ram-b2" x="438" y="50" width="28" height="210" rx="4" onclick="handleSlotClick('zone-ram-b2')"/>
+                <!-- 3. zone-ram-b2: Langkah 5 (RAM Slot B2) | X[438..466], Y[55..255] -->
+                <rect id="zone-ram-b2" x="438" y="55" width="28" height="200" rx="4" onclick="handleSlotClick('zone-ram-b2')"/>
 
-                <!-- Zone M.2 NVMe (Step 6) -->
-                <rect id="zone-m2" x="170" y="268" width="180" height="50" rx="6" onclick="handleSlotClick('zone-m2')"/>
+                <!-- 4. zone-m2: Langkah 6 (SSD M.2 NVMe) | X[165..350], Y[265..310] -->
+                <rect id="zone-m2" x="165" y="265" width="185" height="45" rx="6" onclick="handleSlotClick('zone-m2')"/>
 
-                <!-- Zone PCIe x16 GPU (Step 7) -->
-                <rect id="zone-pcie" x="90" y="325" width="320" height="60" rx="6" onclick="handleSlotClick('zone-pcie')"/>
+                <!-- 5. zone-pcie-x16: Langkah 7 (VGA Card / GPU) | X[95..390], Y[330..380] -->
+                <rect id="zone-pcie-x16" x="95" y="330" width="295" height="50" rx="6" onclick="handleSlotClick('zone-pcie-x16')"/>
 
-                <!-- Zone ATX 24-Pin Power (Step 8) -->
-                <rect id="zone-atx24" x="475" y="70" width="55" height="170" rx="6" onclick="handleSlotClick('zone-atx24')"/>
+                <!-- 6. zone-pcie-x1: Langkah 8 (LAN Card / NIC) | X[95..275], Y[425..470] -->
+                <rect id="zone-pcie-x1" x="95" y="425" width="180" height="45" rx="6" onclick="handleSlotClick('zone-pcie-x1')"/>
 
-                <!-- Zone Front Panel (Step 9) -->
-                <rect id="zone-fpanel" x="410" y="495" width="100" height="45" rx="6" onclick="handleSlotClick('zone-fpanel')"/>
+                <!-- 7. zone-atx24: Langkah 9 (Kabel Power Main ATX 24-Pin) | X[480..535], Y[70..245] -->
+                <rect id="zone-atx24" x="480" y="70" width="55" height="175" rx="6" onclick="handleSlotClick('zone-atx24')"/>
+
+                <!-- 8. zone-fpanel: Langkah 10 (Kabel Front Panel) | X[415..525], Y[510..560] -->
+                <rect id="zone-fpanel" x="415" y="510" width="110" height="50" rx="6" onclick="handleSlotClick('zone-fpanel')"/>
               </g>
-
             </svg>
           </div>
 
-          <div style="display:flex; gap:12px; margin-top:12px; width:100%;">
+          <div style="display:flex; gap:10px; width:100%;">
             <button class="btn" style="flex:1;" onclick="resetAssembly()">🔄 Reset Perakitan</button>
-            <button class="btn btn-primary" style="flex:1;" onclick="runTeacherDemo()">▷ Mode Demo Guru</button>
+            <button class="btn btn-primary" style="flex:1;" onclick="runTeacherDemo()">▶️ Mode Demo Guru</button>
           </div>
         </div>
 
-        <!-- KOLOM KANAN: FORM SISWA & KONTROL PROGRES -->
+        <!-- KOLOM KANAN: DATA SISWA, STATUS & SERTIFIKAT -->
         <div class="sim-panel">
-          <h3 style="font-size:15px; color:var(--accent-neon);">Data Siswa (Untuk Sertifikat)</h3>
-          
+          <div class="sim-panel-title"><span>Data Siswa (Untuk Sertifikat)</span></div>
+
           <div>
-            <label style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">Nama Lengkap Siswa</label>
-            <input type="text" id="input-nama" class="input-field" placeholder="Masukkan nama..." oninput="saveStudentData()"/>
+            <label for="input-nama" style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:4px;">Nama Lengkap Siswa</label>
+            <input type="text" id="input-nama" class="input-field" placeholder="Ketik nama lengkap siswa..." oninput="saveStudentData()"/>
           </div>
 
           <div>
-            <label style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">NISN</label>
-            <input type="text" id="input-nisn" class="input-field" placeholder="Masukkan NISN..." oninput="saveStudentData()"/>
+            <label for="input-nisn" style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:4px;">NISN</label>
+            <input type="text" id="input-nisn" class="input-field" placeholder="Ketik nomor NISN..." oninput="saveStudentData()"/>
           </div>
 
-          <hr style="border-color:var(--border-color);">
+          <div id="student-validation-alert" class="inline-alert">
+            Harap lengkapi Nama Lengkap Siswa dan NISN terlebih dahulu sebelum mencetak sertifikat.
+          </div>
+
+          <hr style="border:none; border-top:1px solid var(--border-color);">
 
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:13px; font-weight:bold;">Progres Perakitan</span>
-            <span style="font-size:14px; font-weight:bold; color:var(--accent-neon);" id="progress-text">0 / 9</span>
+            <span style="font-size:0.86rem; font-weight:700;">Progres Perakitan</span>
+            <span id="progress-text" style="font-size:0.9rem; font-weight:800; color:var(--accent-neon);">0 / 10</span>
           </div>
-
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progress-bar"></div>
           </div>
 
-          <div style="font-size:11px; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Instruksi Langkah Aktif:</div>
+          <div style="font-size:0.74rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">
+            Instruksi Langkah Aktif:
+          </div>
           <div class="feedback-box" id="feedback-box">
-            Pilih komponen <strong>1. Processor (CPU Intel LGA 1700)</strong> di panel kiri, lalu klik area soket CPU pada Motherboard.
+            Pasang komponen <strong>1. Processor (CPU Intel LGA 1700)</strong> dengan mengklik area soket LGA 1700 pada papan Motherboard.
           </div>
 
-          <button class="btn btn-success" id="btn-post-test" disabled style="width:100%; padding:12px;" onclick="runPostTest()">
-            ⚡ Uji POST & Nyalakan PC
+          <button class="btn btn-success" id="btn-post-test" disabled style="width:100%; padding:11px;" onclick="runPostTest()">
+            ⚡ Uji POST &amp; Nyalakan PC
           </button>
 
-          <button class="btn btn-primary" id="btn-cert" style="width:100%; padding:12px;" onclick="openCertificateModal()">
-            📜 Cetak Sertifikat / Hasil Praktik
+          <button class="btn btn-primary" style="width:100%; padding:11px;" onclick="openCertificateModal()">
+            🖨️ Cetak Sertifikat / Hasil Praktik
           </button>
         </div>
 
       </div>
-    </div>
+    </section>
 
-    <!-- TAB 4: KUIS & TROUBLESHOOTING -->
-    <div id="tab-4" class="tab-content">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h2 style="color:var(--accent-neon);">Kuis & Troubleshooting Hardware (8 Kasus)</h2>
-        <div style="font-size:16px; font-weight:bold; color:var(--accent-blue);" id="quiz-score-display">Skor Kuis: 0 / 100</div>
+    <!-- ==================== TAB 4: KUIS & TROUBLESHOOTING (20M) ==================== -->
+    <section id="tab-4" class="tab-content">
+      <div class="quiz-wrapper">
+        <div class="quiz-top-bar">
+          <div>
+            <h2 class="section-heading">Kuis Evaluasi &amp; Troubleshooting Hardware</h2>
+            <p class="section-sub" style="margin-bottom:0;">8 soal studi kasus nyata seputar K3, Perakitan, VGA Card, LAN Card, Thermal Paste, &amp; Dual Channel RAM.</p>
+          </div>
+          <div class="quiz-score-pill" id="quiz-score-pill">Skor Kuis: 0 / 100</div>
+        </div>
+        <div id="quiz-container"></div>
+        <div style="text-align:right; margin-top:10px;">
+          <button class="btn" onclick="resetQuiz()">🔄 Ulangi Kuis</button>
+        </div>
       </div>
-      <div id="quiz-container">
-        <!-- Rendered by JS -->
-      </div>
-    </div>
+    </section>
 
   </main>
 
-  <!-- MODAL SPEC ENSIKLOPEDIA -->
-  <div class="modal-overlay" id="spec-modal">
-    <div class="modal-content">
-      <button class="close-modal-btn" onclick="closeModal('spec-modal')">&times;</button>
-      <h3 style="color:var(--accent-neon); margin-bottom:12px;" id="spec-title">Detail Spesifikasi</h3>
-      <div id="spec-body" style="font-size:14px; color:var(--text-main); display:flex; flex-direction:column; gap:12px;"></div>
+  <!-- ==========================================================================
+       MODAL 1: DETAIL ENSIKLOPEDIA KOMPONEN
+       ========================================================================== -->
+  <div class="modal-overlay no-print" id="modal-encyclo">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('modal-encyclo')">&times;</button>
+      <div id="modal-encyclo-body"></div>
     </div>
   </div>
 
-  <!-- MODAL UEFI BIOS SCREEN -->
-  <div class="modal-overlay" id="bios-modal">
-    <div class="modal-content" style="max-width:750px; background:#000088; padding:10px;">
-      <div class="bios-screen">
-        <div class="bios-header">
-          <span>SMKN 1 PETASIA UEFI BIOS UTILITY - EZ MODE</span>
-          <span>Ver 2.20.1271</span>
+  <!-- ==========================================================================
+       MODAL 2: LAYAR UEFI BIOS (HASIL UJI POST)
+       ========================================================================== -->
+  <div class="modal-overlay no-print" id="modal-bios">
+    <div class="modal-box" style="max-width:760px;">
+      <button class="modal-close" onclick="closeModal('modal-bios')">&times;</button>
+      <h3 style="color:var(--accent-success); margin-bottom:12px;">✅ POST BERHASIL (1x Short Beep) — UEFI BIOS AKTIF</h3>
+      <div class="bios-window">
+        <div class="bios-topbar">
+          <span>UEFI BIOS UTILITY v4.20 — SMKN 1 PETASIA</span>
+          <span>KELAS XI TKJ 2026</span>
         </div>
-
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:12px;">
-          <div style="border:1px solid #fff; padding:10px;">
-            <div style="font-weight:bold; color:#ffff00; margin-bottom:6px;">SYSTEM INFORMATION</div>
-            <div>CPU: Intel Core i7-13700K @ 3.40GHz</div>
-            <div>Total Memory: 32768 MB (DDR5 5600MHz)</div>
-            <div>DRAM Status: DIMM_A2 (16GB), DIMM_B2 (16GB)</div>
-            <div>Storage: NVMe SSD 1TB (PCIe 4.0 x4)</div>
-            <div>Graphics: NVIDIA GeForce RTX Series</div>
+        <div class="bios-grid">
+          <div class="bios-box">
+            <div style="color:#fbbf24; font-weight:bold; margin-bottom:6px;">DETECTED HARDWARE</div>
+            <div>CPU     : Intel Core i7 LGA 1700 (OK)</div>
+            <div>MEMORY  : 32768 MB DDR5 Dual-Channel</div>
+            <div>DIMM_A2 : 16GB DDR5-5600 — DETECTED</div>
+            <div>DIMM_B2 : 16GB DDR5-5600 — DETECTED</div>
+            <div>M.2_1   : NVMe SSD 1TB PCIe 4.0 (OK)</div>
+            <div>PCIe_x16: VGA Card RTX Series (OK)</div>
+            <div>PCIe_x1 : Gigabit LAN Card NIC (OK)</div>
           </div>
-
-          <div style="border:1px solid #fff; padding:10px;">
-            <div style="font-weight:bold; color:#ffff00; margin-bottom:6px;">HARDWARE MONITOR</div>
-            <div>CPU Temperature: <span style="color:#00ff00;">34 °C</span></div>
-            <div>CPU Voltage: 1.216 V</div>
-            <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
-              <span>CPU FAN Speed:</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="2" class="fan-spinner">
-                <circle cx="12" cy="12" r="9"/>
-                <path d="M12 3v18M3 12h18"/>
-              </svg>
-              <span style="color:#00ff00;">1450 RPM</span>
-            </div>
-            <div style="margin-top:10px; color:#00ff00; font-weight:bold;">
-              [ POST STATUS: OK - ALL HARDWARE DETECTED ]
-            </div>
+          <div class="bios-box">
+            <div style="color:#fbbf24; font-weight:bold; margin-bottom:6px;">HARDWARE MONITOR</div>
+            <div>CPU Temp    : <span style="color:#34d399;">33 °C (Normal)</span></div>
+            <div>CPU Fan     : <span style="color:#34d399;">1520 RPM (Spinning)</span></div>
+            <div>VGA Fan     : <span style="color:#34d399;">1180 RPM (Spinning)</span></div>
+            <div>LAN Status  : <span style="color:#34d399;">1000 Mbps Full Duplex</span></div>
+            <div>ATX +12V    : 12.048 V (Stable)</div>
+            <div>ATX +5V     : 5.020 V (Stable)</div>
+            <div style="margin-top:8px; color:#34d399; font-weight:bold;">[ SYSTEM READY TO BOOT OS ]</div>
           </div>
         </div>
-
-        <div style="margin-top:16px; text-align:center;">
-          <button class="btn btn-primary" onclick="closeModal('bios-modal')">Keluar Dari BIOS UEFI</button>
-        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button class="btn" onclick="closeModal('modal-bios')">Tutup BIOS</button>
+        <button class="btn btn-primary" onclick="closeModal('modal-bios'); openCertificateModal();">🖨️ Lanjut Cetak Sertifikat</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL SERTIFIKAT PREVIEW -->
-  <div class="modal-overlay" id="certificate-modal">
-    <div class="modal-content" style="max-width:800px; background:#fff;">
-      <button class="close-modal-btn no-print" onclick="closeModal('certificate-modal')" style="color:#000;">&times;</button>
-      
-      <div class="cert-frame" id="certificate-print-area">
-        <div class="cert-header">
-          <h2>SMK NEGERI 1 PETASIA</h2>
-          <h3>JURUSAN TEKNIK KOMPUTER DAN JARINGAN</h3>
-          <p style="font-size:18px; font-weight:bold; letter-spacing:2px; margin-top:10px;">SERTIFIKAT UJI KOMPETENSI PRAKTIKUM</p>
-          <p style="font-size:12px; color:#64748b;">Nomor: 421.5 / SMKN1-PTS / TKJ / 2026</p>
+  <!-- ==========================================================================
+       MODAL 3: PRATINJAU & CETAK SERTIFIKAT PROFESIONAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="modal-cert">
+    <div class="modal-box cert-modal-box">
+      <button class="modal-close no-print" onclick="closeModal('modal-cert')" style="background:#e2e8f0; color:#0f172a;">&times;</button>
+
+      <div class="cert-sheet">
+        <div class="cert-school">SMK NEGERI 1 PETASIA</div>
+        <div class="cert-dept">KOMPETENSI KEAHLIAN TEKNIK KOMPUTER &amp; JARINGAN</div>
+
+        <div class="cert-title">SERTIFIKAT HASIL PRAKTIKUM PERAKITAN KOMPUTER</div>
+        <div style="font-size:0.78rem; color:#475569; margin-top:4px; font-family:var(--font-sans);">
+          Modul Praktikum Virtual Hardware Computer Assembly — Kelas XI TKJ 2026
         </div>
 
-        <div class="cert-body">
-          <p style="font-size:14px;">Diberikan Kepada Siswa:</p>
-          <div class="cert-name" id="cert-display-nama">NAMA SISWA</div>
-          <p style="font-size:13px; color:#334155;">NISN: <span id="cert-display-nisn">0000000000</span></p>
-
-          <p style="font-size:14px; margin-top:16px;">
-            Telah menyelesaikan modul praktikum interaktif <strong>Simulasi Perakitan Komputer (Sesi 2 Jam)</strong> dengan hasil penilaian sebagai berikut:
-          </p>
-
-          <table class="cert-table">
-            <thead>
-              <tr>
-                <th>Item Evaluasi</th>
-                <th>Target Sesi</th>
-                <th>Capaian Hasil</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Langkah Perakitan Hardware (Tab 3)</td>
-                <td>9 Langkah Utama</td>
-                <td id="cert-progress-val">9 / 9 Selesai</td>
-                <td style="color:#16a34a; font-weight:bold;" id="cert-assembly-status">LENGKAP</td>
-              </tr>
-              <tr>
-                <td>Pengujian POST BIOS UEFI</td>
-                <td>POST Normal & Fan Spin</td>
-                <td id="cert-post-val">BERHASIL</td>
-                <td style="color:#16a34a; font-weight:bold;">PASS</td>
-              </tr>
-              <tr>
-                <td>Kuis Troubleshooting Hardware (Tab 4)</td>
-                <td>8 Kasus Studi</td>
-                <td id="cert-quiz-val">80 / 100</td>
-                <td style="color:#16a34a; font-weight:bold;" id="cert-quiz-status">KOMPETEN</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div style="font-size:15px; font-weight:bold; margin-top:10px; color:#1e3a8a;">
-            PREDIKAT KELULUSAN: <span id="cert-predikat">SANGAT KOMPETEN</span>
-          </div>
+        <p style="margin-top:18px; font-size:0.95rem;">Diberikan kepada peserta didik:</p>
+        <div class="cert-student-name" id="cert-nama">NAMA SISWA</div>
+        <div style="font-size:0.9rem; font-family:var(--font-sans); color:#1e293b;">
+          NISN: <strong id="cert-nisn">0000000000</strong> &nbsp;|&nbsp; Kelas: <strong>XI TKJ 2026</strong>
         </div>
 
-        <div class="cert-footer">
+        <p style="margin-top:14px; font-size:0.88rem; font-family:var(--font-sans); color:#334155;">
+          Telah mengikuti sesi praktikum <strong>Simulasi Perakitan Komputer (120 Menit)</strong> dengan rincian capaian sebagai berikut:
+        </p>
+
+        <table class="cert-table">
+          <thead>
+            <tr>
+              <th>Aspek Penilaian</th>
+              <th>Target Praktikum</th>
+              <th>Hasil Capaian</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Progres Perakitan Hardware</td>
+              <td>10 Komponen (termasuk VGA Card &amp; LAN Card)</td>
+              <td><strong id="cert-progress">0 / 10 Komponen</strong></td>
+            </tr>
+            <tr>
+              <td>Pengujian POST &amp; Deteksi UEFI BIOS</td>
+              <td>POST Normal, Kipas &amp; LAN/VGA Terdeteksi</td>
+              <td><strong id="cert-post">BELUM DIUJI</strong></td>
+            </tr>
+            <tr>
+              <td>Skor Kuis Troubleshooting</td>
+              <td>8 Studi Kasus Hardware &amp; Jaringan</td>
+              <td><strong id="cert-quiz">0 / 100</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Predikat Kelulusan</strong></td>
+              <td colspan="2"><strong id="cert-predikat" style="font-size:0.95rem;">PERLU PENDAMPINGAN</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="cert-sign-row">
           <div>
-            <p>Tanggal Praktikum:</p>
-            <p style="font-weight:bold;" id="cert-date">24 November 2026</p>
+            <div>Petasia, <span id="cert-tanggal">-</span></div>
+            <div style="margin-top:6px; font-size:0.78rem; color:#475569;">Dokumen ini diterbitkan oleh Sistem Laboratorium Virtual TKJ SMKN 1 Petasia.</div>
           </div>
-          <div>
-            <p>Guru Pengampu TKJ,</p>
-            <br><br>
-            <p style="font-weight:bold; text-decoration:underline;">Ahyar, S.Kom.</p>
-            <p style="font-size:11px; color:#64748b;">NIP. 19880412 201503 1 002</p>
+          <div style="text-align:center; min-width:210px;">
+            <div>Guru Pengampu,</div>
+            <div style="height:54px;"></div>
+            <div style="font-weight:800; text-decoration:underline; font-size:0.95rem;">Ahyar</div>
+            <div style="font-size:0.82rem; font-weight:600; color:#1e293b;">NIP. 197812312011011022</div>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:12px;" class="no-print">
-        <button class="btn" onclick="closeModal('certificate-modal')">Tutup</button>
-        <button class="btn btn-primary" onclick="printCertificate()">🖨️ Cetak / Simpan PDF</button>
+      <div class="no-print" style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button class="btn" onclick="closeModal('modal-cert')">Tutup</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
       </div>
     </div>
   </div>
 
-  <!-- VANILLA JAVASCRIPT & WEB AUDIO API SYNTHESIZER -->
+  <!-- ==========================================================================
+       VANILLA JAVASCRIPT + WEB AUDIO API SYNTHESIZER
+       ========================================================================== -->
   <script>
     /* ==========================================================================
-       WEB AUDIO API SYNTHESIZER (100% OFFLINE SOUND EFFECTS)
+       1. WEB AUDIO API SYNTHESIZER (100% OFFLINE)
        ========================================================================== */
     let audioCtx = null;
-    let isSoundOn = true;
+    let soundOn = true;
 
-    function initAudio() {
+    function ensureAudio() {
       if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
       }
     }
 
     function toggleSound() {
-      isSoundOn = !isSoundOn;
-      const btn = document.getElementById('btn-sound');
-      btn.innerText = isSoundOn ? '🔊 Suara: ON' : '🔇 Suara: OFF';
+      soundOn = !soundOn;
+      document.getElementById('btn-sound-toggle').textContent = soundOn ? '🔊 Suara: ON' : '🔇 Suara: OFF';
     }
 
     function playSound(type) {
-      if (!isSoundOn) return;
-      initAudio();
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (!soundOn) return;
+      ensureAudio();
+      if (!audioCtx) return;
 
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.connect(gain);
       gain.connect(audioCtx.destination);
-
       const now = audioCtx.currentTime;
 
       if (type === 'click') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(600, now);
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.frequency.setValueAtTime(580, now);
+        osc.frequency.exponentialRampToValueAtTime(240, now + 0.045);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
         osc.start(now);
-        osc.stop(now + 0.05);
-      } else if (type === 'correct') {
+        osc.stop(now + 0.045);
+      } else if (type === 'snap') {
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
-        osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.07);
+        osc.frequency.setValueAtTime(783.99, now + 0.14);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
         osc.start(now);
-        osc.stop(now + 0.35);
-      } else if (type === 'wrong') {
+        osc.stop(now + 0.28);
+      } else if (type === 'error') {
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.linearRampToValueAtTime(100, now + 0.2);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.frequency.setValueAtTime(170, now);
+        osc.frequency.linearRampToValueAtTime(105, now + 0.22);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
         osc.start(now);
-        osc.stop(now + 0.25);
+        osc.stop(now + 0.24);
       } else if (type === 'post') {
         osc.type = 'square';
-        osc.frequency.setValueAtTime(1000, now);
-        gain.gain.setValueAtTime(0.25, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.frequency.setValueAtTime(1020, now);
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
         osc.start(now);
-        osc.stop(now + 0.3);
+        osc.stop(now + 0.28);
       }
     }
 
     /* ==========================================================================
-       TIMER MENGAJAR 120:00
+       2. TIMER MENGAJAR 120 MENIT
        ========================================================================== */
-    let timerTime = 120 * 60; // 120 minutes in seconds
-    let timerInterval = null;
-    let isTimerRunning = false;
+    let timerSeconds = 120 * 60;
+    let timerHandle = null;
+    let timerRunning = false;
 
-    function updateTimerDisplay() {
-      const minutes = Math.floor(timerTime / 60);
-      const seconds = timerTime % 60;
-      document.getElementById('timer-text').innerText = 
-        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    function updateTimerUI() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById('timer-display').textContent =
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
     function toggleTimer() {
+      playSound('click');
       const btn = document.getElementById('btn-timer-toggle');
-      if (isTimerRunning) {
-        clearInterval(timerInterval);
-        isTimerRunning = false;
-        btn.innerText = 'Mulai';
+      if (timerRunning) {
+        clearInterval(timerHandle);
+        timerRunning = false;
+        btn.textContent = 'Mulai';
       } else {
-        isTimerRunning = true;
-        btn.innerText = 'Jeda';
-        timerInterval = setInterval(() => {
-          if (timerTime > 0) {
-            timerTime--;
-            updateTimerDisplay();
+        timerRunning = true;
+        btn.textContent = 'Jeda';
+        timerHandle = setInterval(() => {
+          if (timerSeconds > 0) {
+            timerSeconds--;
+            updateTimerUI();
           } else {
-            clearInterval(timerInterval);
-            isTimerRunning = false;
-            btn.innerText = 'Selesai';
+            clearInterval(timerHandle);
+            timerRunning = false;
+            btn.textContent = 'Selesai';
+            playSound('post');
           }
         }, 1000);
       }
     }
 
     function resetTimer() {
-      clearInterval(timerInterval);
-      isTimerRunning = false;
-      timerTime = 120 * 60;
-      document.getElementById('btn-timer-toggle').innerText = 'Mulai';
-      updateTimerDisplay();
-    }
-
-    /* ==========================================================================
-       TAB SWITCHING
-       ========================================================================== */
-    function switchTab(tabIndex) {
       playSound('click');
-      document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
-        btn.classList.toggle('active', idx === tabIndex - 1);
+      clearInterval(timerHandle);
+      timerRunning = false;
+      timerSeconds = 120 * 60;
+      document.getElementById('btn-timer-toggle').textContent = 'Mulai';
+      updateTimerUI();
+    }
+
+    /* ==========================================================================
+       3. NAVIGASI TAB
+       ========================================================================== */
+    function switchTab(tabNum) {
+      playSound('click');
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', Number(btn.dataset.tab) === tabNum);
       });
-      document.querySelectorAll('.tab-content').forEach((content, idx) => {
-        content.classList.toggle('active', idx === tabIndex - 1);
+      document.querySelectorAll('.tab-content').forEach((sec, idx) => {
+        sec.classList.toggle('active', idx + 1 === tabNum);
       });
     }
 
     /* ==========================================================================
-       TAB 2: ENSIKLOPEDIA KOMPONEN
+       4. TAB 2: ENSIKLOPEDIA 9 KOMPONEN PC
        ========================================================================== */
-    const encyclopediaData = [
+    const encycloItems = [
       {
         id: 'cpu',
-        name: 'Processor (CPU Intel LGA 1700)',
-        spec: 'Intel Core i7 LGA 1700, 16 Core 24 Thread, Base Speed 3.4GHz.',
-        tips: 'Jangan menyentuh pin emas bawah CPU. Pastikan lekukan (notch) segaris dengan soket.',
-        svg: `<rect x="20" y="20" width="60" height="60" fill="#cbd5e1" rx="4"/><rect x="35" y="35" width="30" height="30" fill="#64748b"/><text x="40" y="52" fill="#fff" font-size="8">LGA 1700</text>`
+        name: 'CPU (Processor Intel LGA 1700)',
+        spec: '16 Core / 24 Thread • Socket LGA 1700 • Up to 5.4 GHz',
+        desc: 'Unit pemroses pusat yang mengeksekusi seluruh instruksi logika, aritmetika, dan kontrol sistem komputer.',
+        tips: 'Tips Guru: Sejajarkan tanda segitiga emas di pojok CPU dengan tanda di soket motherboard. Jangan pernah menekan paksa atau menyentuh pin soket LGA.',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="18" y="18" width="64" height="64" rx="5" fill="#cbd5e1" stroke="#38bdf8" stroke-width="3"/><rect x="32" y="32" width="36" height="36" rx="2" fill="#64748b"/><polygon points="21,79 31,79 21,69" fill="#f59e0b"/><text x="50" y="54" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">CPU</text></svg>`
       },
       {
-        id: 'paste',
-        name: 'Thermal Paste',
-        spec: 'Konduktivitas Termal 12.5 W/mK (Compound Berbasis Karbon/Perak).',
-        tips: 'Gunakan seukuran biji jagung (pea-size) di tengah IHS. Jangan terlalu banyak agar tidak meluber.',
-        svg: `<path d="M 30 70 L 40 20 L 60 20 L 70 70 Z" fill="#94a3b8"/><rect x="42" y="10" width="16" height="10" fill="#0284c7"/>`
+        id: 'mobo',
+        name: 'Motherboard ATX LGA 1700',
+        spec: 'ATX Form Factor • 4x DDR5 DIMM • PCIe x16 & x1 • M.2 NVMe',
+        desc: 'Papan sirkuit utama (mainboard) yang menghubungkan seluruh komponen hardware agar saling berkomunikasi.',
+        tips: 'Tips Guru: Pastikan baut standoff kuningan pada casing terpasang sesuai lubang motherboard untuk mencegah korsleting di bagian belakang PCB.',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="14" y="12" width="72" height="76" rx="5" fill="#0f172a" stroke="#3b82f6" stroke-width="3"/><rect x="26" y="24" width="24" height="24" fill="#475569"/><rect x="60" y="22" width="6" height="34" fill="#0284c7"/><rect x="70" y="22" width="6" height="34" fill="#0284c7"/><rect x="24" y="64" width="44" height="7" fill="#38bdf8"/></svg>`
       },
       {
         id: 'cooler',
-        name: 'CPU Cooler / Fan',
-        spec: 'Tower Heatsink Aluminium + 4 Heatpipe Tembaga + Kipas 120mm PWM.',
-        tips: 'Kencangkan 4 baut mounting secara menyilang (diagonal) agar tekanan pasta merata.',
-        svg: `<circle cx="50" cy="50" r="35" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/><circle cx="50" cy="50" r="10" fill="#38bdf8"/>`
+        name: 'CPU Cooler / Heatsink Fan',
+        spec: '120mm PWM Fan • Aluminium Fin Stack • 4 Copper Heatpipes',
+        desc: 'Menyerap panas tinggi dari permukaan IHS CPU melalui thermal paste lalu membuangnya ke udara casing.',
+        tips: 'Kesalahan Umum Siswa: Lupa melepas stiker plastik bening di dasar tembaga cooler yang berakibat CPU langsung overheating hingga 100°C.',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="16" y="16" width="68" height="68" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/><circle cx="50" cy="50" r="26" fill="#0f172a" stroke="#0284c7" stroke-width="2"/><path d="M50 28 L58 50 L50 72 L42 50 Z" fill="#38bdf8"/><path d="M28 50 L50 42 L72 50 L50 58 Z" fill="#38bdf8"/><circle cx="50" cy="50" r="7" fill="#0f172a"/></svg>`
       },
       {
         id: 'ram',
-        name: 'RAM DDR5 (Dual Channel)',
-        spec: '2x 16GB DDR5 5600MHz PC5-44800 Unbuffered DIMM.',
-        tips: 'Untuk 2 keping RAM pada motherboard 4 slot, pasang di Slot A2 dan Slot B2.',
-        svg: `<rect x="15" y="35" width="70" height="30" fill="#0284c7" rx="2"/><rect x="25" y="60" width="50" height="8" fill="#fbbf24"/>`
+        name: 'RAM DDR5 Dual Channel',
+        spec: '32GB (2x16GB) DDR5 5600MHz • 288-Pin DIMM',
+        desc: 'Memori akses acak berkecepatan tinggi yang menyimpan data aplikasi dan sistem operasi selama komputer aktif.',
+        tips: 'Tips Guru: Pada motherboard 4 slot, pasang 2 keping RAM di Slot A2 dan B2 agar mode Dual Channel aktif dan tekan sampai pengunci berbunyi "KLIK".',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="10" y="32" width="80" height="36" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/><rect x="20" y="40" width="14" height="16" fill="#0f172a"/><rect x="43" y="40" width="14" height="16" fill="#0f172a"/><rect x="66" y="40" width="14" height="16" fill="#0f172a"/><rect x="16" y="62" width="68" height="6" fill="#f59e0b"/></svg>`
       },
       {
         id: 'ssd',
-        name: 'Storage SSD M.2 NVMe',
-        spec: '1TB M.2 NVMe PCIe Gen 4.0 x4 Read up to 7000MB/s.',
-        tips: 'Pasang dengan sudut 30 derajat, tekan perlahan, lalu kunci dengan baut M.2 atau standoff.',
-        svg: `<rect x="15" y="40" width="70" height="20" fill="#059669" rx="2"/><circle cx="75" cy="50" r="3" fill="#cbd5e1"/>`
+        name: 'SSD M.2 NVMe',
+        spec: '1TB PCIe Gen 4.0 x4 • M.2 2280 • Read up to 7000 MB/s',
+        desc: 'Media penyimpanan permanen ultra-cepat tanpa komponen mekanis untuk sistem operasi, aplikasi, dan data.',
+        tips: 'Tips Guru: Masukkan SSD M.2 dengan sudut 30 derajat ke slot, tekan mendatar dengan lembut, lalu kencangkan baut penahan M.2 standoff.',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="10" y="38" width="80" height="24" rx="3" fill="#047857" stroke="#34d399" stroke-width="2"/><rect x="64" y="43" width="18" height="14" fill="#0f172a"/><circle cx="17" cy="50" r="3" fill="#fbbf24"/></svg>`
       },
       {
-        id: 'gpu',
-        name: 'Kartu Grafis / GPU (PCIe x16)',
-        spec: 'NVIDIA GeForce RTX 12GB GDDR6X PCIe 4.0 x16 Interface.',
-        tips: 'Buka pengunci slot PCIe terlebih dahulu, tekan GPU hingga terdengar bunyi "klik".',
-        svg: `<rect x="10" y="30" width="80" height="40" fill="#1e1b4b" stroke="#6366f1" stroke-width="2" rx="4"/><circle cx="35" cy="50" r="12" fill="#0f172a"/><circle cx="65" cy="50" r="12" fill="#0f172a"/>`
+        id: 'vga',
+        name: 'VGA Card (GPU)',
+        spec: 'PCIe 4.0/5.0 x16 • Dual-Fan Cooling • 12GB GDDR6X',
+        desc: 'Kartu grafis khusus untuk mengolah data visual, tampilan resolusi tinggi, desain 3D, dan akselerasi grafis.',
+        tips: 'Kesalahan Umum Siswa: Lupa memindahkan kabel HDMI/DisplayPort dari port motherboard ke port VGA Card sehingga monitor tampil "No Display".',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="10" y="28" width="80" height="44" rx="5" fill="#1e1b4b" stroke="#818cf8" stroke-width="3"/><circle cx="34" cy="50" r="13" fill="#0f172a" stroke="#818cf8" stroke-width="2"/><circle cx="66" cy="50" r="13" fill="#0f172a" stroke="#818cf8" stroke-width="2"/><rect x="26" y="72" width="44" height="5" fill="#f59e0b"/></svg>`
       },
       {
-        id: 'atx24',
-        name: 'Kabel Power Main ATX 24-Pin',
-        spec: 'Kabel Utuh 24-Pin ATX dari Power Supply Unit (PSU) 80+ Bronze.',
-        tips: 'Pastikan klip pengunci kabel berada di sisi yang sama dengan pengait soket motherboard.',
-        svg: `<rect x="30" y="20" width="40" height="60" fill="#dc2626" rx="3"/><line x1="30" y1="40" x2="70" y2="40" stroke="#fff" stroke-width="2"/>`
+        id: 'lan',
+        name: 'LAN Card (NIC / Network Interface Card)',
+        spec: 'PCIe x1 Interface • Gigabit Ethernet 10/100/1000 Mbps • Port RJ-45',
+        desc: 'Kartu ekspansi antarmuka jaringan untuk menghubungkan komputer ke jaringan lokal (LAN) maupun internet melalui kabel UTP RJ-45.',
+        tips: 'Tips Guru: Pasang LAN Card pada slot PCIe x1 hingga rapat dan kencangkan baut bracket casing. Pastikan lampu indikator Link/Act menyala saat kabel UTP terpasang.',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="18" y="28" width="68" height="42" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="2.5"/><rect x="12" y="24" width="7" height="52" rx="2" fill="#cbd5e1"/><rect x="22" y="38" width="18" height="18" fill="#334155" stroke="#94a3b8"/><rect x="52" y="40" width="18" height="16" fill="#0f172a" stroke="#34d399"/><rect x="32" y="70" width="24" height="5" fill="#f59e0b"/></svg>`
       },
       {
-        id: 'fpanel',
-        name: 'Kabel Front Panel (Power SW)',
-        spec: 'Pin Header 2-Pin Switch Daya Utama Sasis PC.',
-        tips: 'Perhatikan diagram pin F_PANEL. Tombol Power SW umumnya dipasang pada pin 6 & 8 atas.',
-        svg: `<rect x="25" y="35" width="50" height="30" fill="#2563eb" rx="3"/><text x="32" y="53" fill="#fff" font-size="9" font-weight="bold">PWR SW</text>`
+        id: 'psu',
+        name: 'Power Supply (PSU)',
+        spec: '750W 80+ Gold • Main ATX 24-Pin • CPU 8-Pin • PCIe 8-Pin',
+        desc: 'Mengubah arus listrik bolak-balik (AC 220V) dari jaringan PLN menjadi arus searah (DC +12V, +5V, +3.3V) yang stabil untuk komponen PC.',
+        tips: 'Tips Guru: Pastikan konektor 24-Pin ATX dan 8-Pin CPU tertancap penuh sampai kait penguncinya masuk agar sistem tidak mati total.',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="18" y="20" width="64" height="60" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="3"/><circle cx="50" cy="50" r="19" fill="#0f172a" stroke="#64748b" stroke-width="2"/><circle cx="50" cy="50" r="6" fill="#f59e0b"/></svg>`
+      },
+      {
+        id: 'case',
+        name: 'Casing PC (ATX Mid-Tower)',
+        spec: 'ATX Support • Airflow Mesh Front • Front Panel Power/Reset SW',
+        desc: 'Rangka pelindung fisik seluruh perangkat keras dari benturan, debu, sekaligus mengatur sirkulasi udara pendinginan.',
+        tips: 'Tips Guru: Hubungkan kabel Front Panel (POWER SW, RESET SW, HDD LED, PWR LED) dengan teliti ke header F_PANEL agar tombol daya casing berfungsi.',
+        svg: `<svg width="96" height="96" viewBox="0 0 100 100"><rect x="26" y="12" width="48" height="76" rx="5" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/><rect x="34" y="22" width="32" height="44" rx="2" fill="#1e293b" stroke="#38bdf8"/><circle cx="50" cy="76" r="4" fill="#10b981"/></svg>`
       }
     ];
 
     function renderEncyclopedia() {
-      const container = document.getElementById('encyclo-container');
-      container.innerHTML = encyclopediaData.map(item => `
-        <div class="encyclo-card">
+      const grid = document.getElementById('encyclo-grid');
+      grid.innerHTML = encycloItems.map(item => `
+        <div class="encyclo-card" onclick="openEncycloModal('${item.id}')">
           <div>
-            <div class="encyclo-img-box">
-              <svg width="100" height="100" viewBox="0 0 100 100">${item.svg}</svg>
-            </div>
-            <h3 style="font-size:15px; color:var(--text-main); margin-bottom:6px;">${item.name}</h3>
-            <p style="font-size:12px; color:var(--text-muted);">${item.spec}</p>
+            <div class="encyclo-svg-box">${item.svg}</div>
+            <h3>${item.name}</h3>
+            <div class="encyclo-spec">${item.spec}</div>
+            <p>${item.desc}</p>
           </div>
-          <button class="btn btn-primary" style="margin-top:14px; width:100%;" onclick="openSpecModal('${item.id}')">
-            🔍 Detail & Tips Guru
-          </button>
+          <span style="font-size:0.8rem; font-weight:700; color:var(--accent-neon);">Lihat Spesifikasi &amp; Tips Guru &rarr;</span>
         </div>
       `).join('');
     }
 
-    function openSpecModal(id) {
+    function openEncycloModal(id) {
       playSound('click');
-      const item = encyclopediaData.find(x => x.id === id);
+      const item = encycloItems.find(x => x.id === id);
       if (!item) return;
-      document.getElementById('spec-title').innerText = item.name;
-      document.getElementById('spec-body').innerHTML = `
-        <div style="background:var(--bg-input); padding:12px; border-radius:6px; border:1px solid var(--border-color);">
-          <strong>Spesifikasi Teknis:</strong><br>${item.spec}
+      document.getElementById('modal-encyclo-body').innerHTML = `
+        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+          <div style="width:104px; height:104px; background:var(--bg-input); border-radius:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border-color);">${item.svg}</div>
+          <div style="flex:1; min-width:200px;">
+            <h2 style="color:var(--accent-neon); font-size:1.25rem;">${item.name}</h2>
+            <div style="color:var(--accent-gold); font-size:0.85rem; font-weight:700; margin-top:4px;">${item.spec}</div>
+          </div>
         </div>
-        <div style="background:rgba(2,132,199,0.1); padding:12px; border-radius:6px; border-left:4px solid var(--accent-blue);">
-          <strong style="color:var(--accent-blue);">💡 Tips Guru / Kesalahan Umum Siswa:</strong><br>${item.tips}
+        <div style="margin-bottom:14px; font-size:0.9rem; color:var(--text-main);">
+          <strong>Fungsi Utama:</strong><br>
+          <span style="color:var(--text-muted);">${item.desc}</span>
+        </div>
+        <div style="background:rgba(245, 158, 11, 0.1); border-left:4px solid var(--accent-gold); padding:12px 14px; border-radius:0 8px 8px 0; font-size:0.88rem; color:#fde68a;">
+          ${item.tips}
         </div>
       `;
-      document.getElementById('spec-modal').style.display = 'flex';
+      document.getElementById('modal-encyclo').classList.add('open');
     }
 
     function closeModal(modalId) {
       playSound('click');
-      document.getElementById(modalId).style.display = 'none';
+      document.getElementById(modalId).classList.remove('open');
     }
 
     /* ==========================================================================
-       TAB 3: SIMULASI RAKIT PC (LOGIKA ARSITEKTUR HITBOX ANTI-BENTROK)
+       5. TAB 3: SIMULASI PERAKITAN 10 LANGKAH (8 HITBOX ANTI-BENTROK)
        ========================================================================== */
-    const stepsData = [
-      { id: 'cpu', name: '1. Processor (CPU Intel LGA 1700)', zone: 'zone-cpu', elementId: 'installed-cpu', desc: 'Klik soket CPU LGA 1700 di tengah Motherboard.' },
-      { id: 'paste', name: '2. Thermal Paste', zone: 'zone-cpu', elementId: 'installed-paste', desc: 'Klik area permukaan CPU untuk mengoleskan Thermal Paste.' },
-      { id: 'cooler', name: '3. CPU Cooler / Fan', zone: 'zone-cpu', elementId: 'installed-cooler', desc: 'Klik soket CPU untuk memasang CPU Cooler Kipas Tower.' },
-      { id: 'ram1', name: '4. RAM DDR5 (Slot A2)', zone: 'zone-ram-a2', elementId: 'installed-ram1', desc: 'Klik Slot DIMM A2 (slot warna biru kedua dari CPU).' },
-      { id: 'ram2', name: '5. RAM DDR5 (Slot B2)', zone: 'zone-ram-b2', elementId: 'installed-ram2', desc: 'Klik Slot DIMM B2 (slot warna biru paling kanan).' },
-      { id: 'ssd', name: '6. Storage SSD M.2 NVMe', zone: 'zone-m2', elementId: 'installed-ssd', desc: 'Klik Slot M.2 NVMe (di antara CPU dan slot PCIe).' },
-      { id: 'gpu', name: '7. Kartu Grafis / GPU (PCIe x16)', zone: 'zone-pcie', elementId: 'installed-gpu', desc: 'Klik Slot PCIe 5.0 x16 teratas untuk memasang GPU.' },
-      { id: 'atx24', name: '8. Kabel Power Main ATX 24-Pin', zone: 'zone-atx24', elementId: 'installed-atx24', desc: 'Klik header konektor ATX 24-Pin di tepi kanan Motherboard.' },
-      { id: 'fpanel', name: '9. Kabel Front Panel (Power SW)', zone: 'zone-fpanel', elementId: 'installed-fpanel', desc: 'Klik header F_PANEL di sudut kanan bawah Motherboard.' }
+    const assemblySteps = [
+      { step: 1, name: '1. Processor (CPU Intel LGA 1700)', zone: 'zone-cpu', visId: 'vis-cpu', desc: 'Klik soket LGA 1700 pada Motherboard untuk memasang Processor.' },
+      { step: 2, name: '2. Thermal Paste Non-Konduktif', zone: 'zone-cpu', visId: 'vis-paste', desc: 'Klik permukaan IHS CPU di soket LGA 1700 untuk mengoleskan Thermal Paste.' },
+      { step: 3, name: '3. CPU Cooler / Heatsink Fan', zone: 'zone-cpu', visId: 'vis-cooler', desc: 'Klik area soket CPU untuk memasang dan mengunci CPU Cooler.' },
+      { step: 4, name: '4. RAM DDR5 (Slot A2)', zone: 'zone-ram-a2', visId: 'vis-ram-a2', desc: 'Klik Slot DIMM A2 (slot kedua dari soket CPU) untuk RAM pertama.' },
+      { step: 5, name: '5. RAM DDR5 (Slot B2)', zone: 'zone-ram-b2', visId: 'vis-ram-b2', desc: 'Klik Slot DIMM B2 (slot paling kanan) untuk mengaktifkan Dual Channel.' },
+      { step: 6, name: '6. Storage SSD M.2 NVMe', zone: 'zone-m2', visId: 'vis-m2', desc: 'Klik Slot M.2 NVMe di antara soket CPU dan slot PCIe x16.' },
+      { step: 7, name: '7. VGA Card / GPU (PCIe x16)', zone: 'zone-pcie-x16', visId: 'vis-vga', desc: 'Klik Slot panjang PCIe x16 (VGA) untuk memasang VGA Card.' },
+      { step: 8, name: '8. LAN Card / NIC (PCIe x1)', zone: 'zone-pcie-x1', visId: 'vis-lan', desc: 'Klik Slot pendek PCIe x1 (LAN) di bawah slot VGA untuk memasang LAN Card.' },
+      { step: 9, name: '9. Kabel Power Main ATX 24-Pin', zone: 'zone-atx24', visId: 'vis-atx24', desc: 'Klik konektor daya utama ATX 24-PIN di tepi kanan Motherboard.' },
+      { step: 10, name: '10. Kabel Front Panel (Power SW)', zone: 'zone-fpanel', visId: 'vis-fpanel', desc: 'Klik pin header F_PANEL di bagian kanan bawah Motherboard.' }
     ];
 
-    // PEMETAAN PRESISI LANGKAH SISWA KE HITBOX ZONA SVG
-    const stepToZone = {
-      0: 'zone-cpu',
-      1: 'zone-cpu',
-      2: 'zone-cpu',
-      3: 'zone-ram-a2',
-      4: 'zone-ram-b2',
-      5: 'zone-m2',
-      6: 'zone-pcie',
-      7: 'zone-atx24',
-      8: 'zone-fpanel'
-    };
-
-    let currentStepIndex = 0;
-    let isPostTested = false;
+    let currentStepIndex = 0; // 0..10
+    let postCompleted = false;
+    let demoInterval = null;
 
     function renderCompList() {
-      const container = document.getElementById('comp-list');
-      container.innerHTML = stepsData.map((step, idx) => {
-        let statusClass = 'locked';
-        let statusBadge = '<span class="badge-status badge-locked">Terkunci</span>';
-
+      const list = document.getElementById('comp-list');
+      list.innerHTML = assemblySteps.map((item, idx) => {
+        let cls = 'locked';
+        let badge = '<span class="status-badge badge-locked">Terkunci</span>';
         if (idx < currentStepIndex) {
-          statusClass = 'done';
-          statusBadge = '<span class="badge-status badge-done">Terpasang</span>';
+          cls = 'done';
+          badge = '<span class="status-badge badge-done">Terpasang</span>';
         } else if (idx === currentStepIndex) {
-          statusClass = 'active';
-          statusBadge = '<span class="badge-status badge-active">Siap dipasang</span>';
+          cls = 'active';
+          badge = '<span class="status-badge badge-active">Siap dipasang</span>';
         }
-
         return `
-          <div class="comp-item ${statusClass}" onclick="selectStepItem(${idx})">
-            <span>${step.name}</span>
-            ${statusBadge}
+          <div class="comp-item ${cls}" onclick="focusCurrentStep(${idx})">
+            <span>${item.name}</span>
+            ${badge}
           </div>
         `;
       }).join('');
 
-      updateUIProgress();
+      document.getElementById('left-counter').textContent = `${currentStepIndex}/10`;
+      document.getElementById('progress-text').textContent = `${currentStepIndex} / 10`;
+      document.getElementById('progress-bar').style.width = `${(currentStepIndex / 10) * 100}%`;
+      document.getElementById('btn-post-test').disabled = (currentStepIndex < 10);
     }
 
-    function selectStepItem(index) {
-      if (index === currentStepIndex) {
+    function focusCurrentStep(idx) {
+      if (idx === currentStepIndex) {
         playSound('click');
-        showFeedback(`Langkah aktif: ${stepsData[index].desc}`, 'normal');
+        setFeedback(`<strong>Langkah Aktif:</strong> ${assemblySteps[idx].desc}`, 'normal');
       }
     }
 
-    function updateUIProgress() {
-      document.getElementById('progress-text').innerText = `${currentStepIndex} / 9`;
-      const pct = (currentStepIndex / 9) * 100;
-      document.getElementById('progress-bar').style.width = `${pct}%`;
-
-      const postBtn = document.getElementById('btn-post-test');
-      if (currentStepIndex === 9) {
-        postBtn.disabled = false;
-        if (!isPostTested) {
-          showFeedback('🎉 Seluruh 9 komponen berhasil terpasang! Klik tombol "Uji POST & Nyalakan PC".', 'success');
-        }
-      } else {
-        postBtn.disabled = true;
-      }
-    }
-
-    function showFeedback(text, type) {
+    function setFeedback(html, mode) {
       const box = document.getElementById('feedback-box');
       box.className = 'feedback-box';
-      if (type === 'error') box.classList.add('error');
-      if (type === 'success') box.classList.add('success');
-      box.innerHTML = text;
+      if (mode === 'success') box.classList.add('success');
+      if (mode === 'error') box.classList.add('error');
+      box.innerHTML = html;
     }
 
-    // FUNGSI PENGECEKAN KLIK ZONA HITBOX MOTHERBOARD
-    function handleSlotClick(clickedZoneId) {
-      if (currentStepIndex >= 9) {
-        showFeedback('Semua komponen sudah terpasang sempurna!', 'success');
+    function handleSlotClick(clickedZone) {
+      if (currentStepIndex >= assemblySteps.length) {
+        setFeedback('Seluruh 10 komponen sudah terpasang sempurna! Silakan klik <strong>Uji POST &amp; Nyalakan PC</strong>.', 'success');
         return;
       }
 
-      const expectedZone = stepToZone[currentStepIndex];
-      const activeStep = stepsData[currentStepIndex];
-
-      if (clickedZoneId === expectedZone) {
-        // POSISI COCOK
-        playSound('correct');
-        document.getElementById(activeStep.elementId).style.display = 'inline';
+      const active = assemblySteps[currentStepIndex];
+      if (clickedZone === active.zone) {
+        playSound('snap');
+        const visEl = document.getElementById(active.visId);
+        if (visEl) visEl.style.display = 'inline';
 
         currentStepIndex++;
         renderCompList();
 
-        if (currentStepIndex < 9) {
-          showFeedback(`<strong>Berhasil!</strong> ${activeStep.name} terpasang.<br>Langkah berikutnya: ${stepsData[currentStepIndex].desc}`, 'success');
+        if (currentStepIndex < assemblySteps.length) {
+          setFeedback(
+            `<strong>Tepat!</strong> ${active.name} berhasil dipasang.<br>Selanjutnya: ${assemblySteps[currentStepIndex].desc}`,
+            'success'
+          );
+        } else {
+          setFeedback(
+            '🎉 <strong>10/10 Komponen Terpasang Sempurna!</strong> Klik tombol hijau <strong>Uji POST &amp; Nyalakan PC</strong> untuk verifikasi UEFI BIOS.',
+            'success'
+          );
         }
       } else {
-        // POSISI SALAH
-        playSound('wrong');
-        showFeedback(`<strong>Slot Salah!</strong> Posisi slot yang Anda klik tidak cocok untuk <strong>${activeStep.name}</strong>. Analisis ulang lokasi motherboard yang tepat.`, 'error');
+        playSound('error');
+        setFeedback(
+          `<strong>Slot Tidak Cocok!</strong> Area yang Anda klik bukan tempat untuk <strong>${active.name}</strong>. Periksa kembali label silkscreen pada Motherboard.`,
+          'error'
+        );
       }
     }
 
     function resetAssembly() {
       playSound('click');
+      if (demoInterval) {
+        clearInterval(demoInterval);
+        demoInterval = null;
+      }
       currentStepIndex = 0;
-      isPostTested = false;
+      postCompleted = false;
 
-      // Sembunyikan semua visual terpasang
-      stepsData.forEach(step => {
-        document.getElementById(step.elementId).style.display = 'none';
+      assemblySteps.forEach(item => {
+        const el = document.getElementById(item.visId);
+        if (el) el.style.display = 'none';
       });
 
+      document.getElementById('cpu-fan-blades').classList.remove('fan-spin');
+      document.getElementById('vga-fan-1').classList.remove('fan-spin');
+      document.getElementById('vga-fan-2').classList.remove('fan-spin');
+      document.getElementById('mb-power-led').setAttribute('fill', '#334155');
+      document.getElementById('lan-link-led').setAttribute('fill', '#475569');
+
       renderCompList();
-      showFeedback(`Reset perakitan selesai. Pilih komponen <strong>1. Processor (CPU Intel LGA 1700)</strong> di panel kiri, lalu klik soket CPU.`, 'normal');
+      setFeedback(`Perakitan direset. ${assemblySteps[0].desc}`, 'normal');
     }
 
     function runTeacherDemo() {
       resetAssembly();
-      let step = 0;
-      const interval = setInterval(() => {
-        if (step < 9) {
-          const zoneId = stepToZone[step];
-          handleSlotClick(zoneId);
-          step++;
+      let stepIdx = 0;
+      demoInterval = setInterval(() => {
+        if (stepIdx < assemblySteps.length) {
+          handleSlotClick(assemblySteps[stepIdx].zone);
+          stepIdx++;
         } else {
-          clearInterval(interval);
+          clearInterval(demoInterval);
+          demoInterval = null;
         }
-      }, 600);
+      }, 420);
     }
 
     function runPostTest() {
-      if (currentStepIndex < 9) return;
+      if (currentStepIndex < assemblySteps.length) return;
       playSound('post');
-      isPostTested = true;
+      postCompleted = true;
 
-      // Animate fans spinning
-      const coolerBlades = document.getElementById('cooler-fan-blades');
-      if (coolerBlades) coolerBlades.classList.add('fan-spinner');
+      document.getElementById('cpu-fan-blades').classList.add('fan-spin');
+      document.getElementById('vga-fan-1').classList.add('fan-spin');
+      document.getElementById('vga-fan-2').classList.add('fan-spin');
+      document.getElementById('mb-power-led').setAttribute('fill', '#10b981');
+      document.getElementById('lan-link-led').setAttribute('fill', '#22c55e');
 
-      showFeedback('⚡ Sinyal Listrik OK! Kipas Cooler & GPU Berputar. Memuat UEFI BIOS...', 'success');
+      setFeedback('⚡ <strong>POST OK!</strong> Kipas CPU &amp; VGA berputar, LED Power &amp; LAN menyala. Membuka UEFI BIOS...', 'success');
 
       setTimeout(() => {
-        document.getElementById('bios-modal').style.display = 'flex';
-      }, 800);
+        document.getElementById('modal-bios').classList.add('open');
+      }, 650);
     }
 
     /* ==========================================================================
-       PERSISTENSI DATA SISWA (LOCALSTORAGE)
+       6. DATA SISWA (LOCALSTORAGE) & CETAK SERTIFIKAT
        ========================================================================== */
     function saveStudentData() {
-      const nama = document.getElementById('input-nama').value;
-      const nisn = document.getElementById('input-nisn').value;
-      localStorage.setItem('smkn1_nama', nama);
-      localStorage.setItem('smkn1_nisn', nisn);
+      localStorage.setItem('smkn1_petasia_nama', document.getElementById('input-nama').value);
+      localStorage.setItem('smkn1_petasia_nisn', document.getElementById('input-nisn').value);
+      document.getElementById('student-validation-alert').classList.remove('show');
     }
 
     function loadStudentData() {
-      const nama = localStorage.getItem('smkn1_nama') || '';
-      const nisn = localStorage.getItem('smkn1_nisn') || '';
-      document.getElementById('input-nama').value = nama;
-      document.getElementById('input-nisn').value = nisn;
+      document.getElementById('input-nama').value = localStorage.getItem('smkn1_petasia_nama') || '';
+      document.getElementById('input-nisn').value = localStorage.getItem('smkn1_petasia_nisn') || '';
+    }
+
+    function openCertificateModal() {
+      playSound('click');
+      const nama = document.getElementById('input-nama').value.trim();
+      const nisn = document.getElementById('input-nisn').value.trim();
+      const alertBox = document.getElementById('student-validation-alert');
+
+      if (!nama || !nisn) {
+        playSound('error');
+        alertBox.classList.add('show');
+        if (!nama) document.getElementById('input-nama').focus();
+        else document.getElementById('input-nisn').focus();
+        return;
+      }
+
+      alertBox.classList.remove('show');
+
+      const quizScore = calculateQuizScore();
+      document.getElementById('cert-nama').textContent = nama;
+      document.getElementById('cert-nisn').textContent = nisn;
+      document.getElementById('cert-progress').textContent = `${currentStepIndex} / 10 Komponen (${Math.round((currentStepIndex / 10) * 100)}%)`;
+      document.getElementById('cert-post').textContent = postCompleted ? 'BERHASIL (POST OK & BIOS AKTIF)' : 'BELUM DIUJI';
+      document.getElementById('cert-quiz').textContent = `${quizScore} / 100`;
+
+      const predikatEl = document.getElementById('cert-predikat');
+      if (currentStepIndex === 10 && postCompleted && quizScore >= 75) {
+        predikatEl.textContent = 'SANGAT KOMPETEN';
+        predikatEl.style.color = '#15803d';
+      } else if (currentStepIndex === 10 && postCompleted) {
+        predikatEl.textContent = 'KOMPETEN';
+        predikatEl.style.color = '#1d4ed8';
+      } else {
+        predikatEl.textContent = 'PERLU PENDAMPINGAN';
+        predikatEl.style.color = '#b91c1c';
+      }
+
+      const today = new Date().toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      document.getElementById('cert-tanggal').textContent = today;
+
+      document.getElementById('modal-cert').classList.add('open');
     }
 
     /* ==========================================================================
-       TAB 4: KUIS & TROUBLESHOOTING
+       7. TAB 4: KUIS & TROUBLESHOOTING (8 SOAL)
        ========================================================================== */
-    const quizData = [
+    const quizQuestions = [
       {
-        q: '1. Komputer dinyalakan, kipas berputar tetapi tidak ada tampilan di layar (No Display) serta terdengar bunyi Beep 3x pendek. Masalah utama terletak pada:',
-        options: ['Storage SSD M.2 belum terpasang', 'Modul RAM DDR5 kotor atau tidak terpasang presisi', 'Kabel Front Panel terbalik', 'Thermal Paste belum dioleskan'],
+        q: '1. Tindakan K3 paling tepat sebelum memegang Motherboard, RAM, VGA Card, atau LAN Card untuk mencegah kerusakan akibat listrik statis (ESD) adalah...',
+        opts: [
+          'A. Menggunakan sarung tangan kain wol tebal',
+          'B. Menggunakan gelang anti-statis (ESD Wrist Strap) yang terhubung ke sasis grounding',
+          'C. Menyemprotkan cairan pembersih kaca ke permukaan PCB',
+          'D. Menyalakan Power Supply agar tegangan stabil'
+        ],
         ans: 1,
-        exp: 'Beep 3x pada award/AMI BIOS menandakan kesalahan memori utama (RAM).'
+        exp: 'Gelang anti-statis menyalurkan muatan elektrostatik dari tubuh teknisi ke ground sehingga IC mikro tidak rusak.'
       },
       {
-        q: '2. Mengapa thermal paste wajib dioleskan secara tipis dan merata di atas IHS Processor?',
-        options: ['Agar processor terikat mati pada soket LGA', 'Mengisi celah udara mikroskopis antara permukaan CPU dan Heatsink Cooler', 'Sebagai isolator muatan listrik statis', 'Meningkatkan kecepatan clock CPU secara otomatis'],
-        ans: 1,
-        exp: 'Udara adalah penghantar panas yang buruk. Thermal paste mengisi pori-pori mikroskopis besi IHS.'
-      },
-      {
-        q: '3. Pada konfigurasi motherboard 4 slot DIMM (A1, A2, B1, B2), lokasi slot optimal untuk 2 keping RAM Dual Channel adalah:',
-        options: ['Slot A1 dan A2', 'Slot B1 dan B2', 'Slot A2 dan B2', 'Slot A1 dan B1'],
-        ans: 2,
-        exp: 'Manual motherboard ATX mewajibkan pengisian slot A2 dan B2 terlebih dahulu untuk stabilitas sinyal memori dual-channel.'
-      },
-      {
-        q: '4. Apa fungsi dari Gelang Anti-Statis (Anti-Static Wrist Strap) dalam prosedur K3 perakitan?',
-        options: ['Melindungi tangan dari goresan casing', 'Menetralkan beda potensial elektrostatik tubuh ke sasis ber-grounding', 'Meningkatkan daya magnet obeng', 'Mencegah sengatan listrik tegangan tinggi AC 220V'],
-        ans: 1,
-        exp: 'Gelang anti-statis membuang muatan statis tubuh yang bisa merusak komponen IC sensitif.'
-      },
-      {
-        q: '5. Saat tombol Power pada Casing ditekan, PC sama sekali tidak merespon (mati total). Komponen mana yang pertama kali diperiksa?',
-        options: ['Pemasangan kabel Front Panel (POWER SW) & Saklar Power Supply', 'Posisi Kartu Grafis GPU PCIe', 'Pemasangan baut SSD M.2', 'Settingan BIOS UEFI'],
+        q: '2. Kasus VGA Card (No Display): PC menyala normal, kipas CPU & VGA berputar, namun monitor menampilkan "No Signal / No Display". Penyebab kesalahan perakitan paling umum adalah...',
+        opts: [
+          'A. Kabel HDMI/DisplayPort dicolokkan ke port Motherboard, bukan ke port VGA Card',
+          'B. LAN Card belum dihubungkan ke kabel UTP',
+          'C. Baut casing belakang kurang satu',
+          'D. Thermal paste berwarna abu-abu'
+        ],
         ans: 0,
-        exp: 'Kabel Power SW meneruskan sinyal pemicu ke motherboard. Jika terlepas atau saklar PSU OFF, PC mati total.'
+        exp: 'Saat VGA Card dedicated terpasang di slot PCIe x16, output visual utama dipindahkan ke port VGA Card tersebut.'
       },
       {
-        q: '6. Komputer sering mengalami Shut Down otomatis sendiri setelah 5 menit digunakan untuk aplikasi berat. Penyebab paling mungkin:',
-        options: ['RAM DDR5 terlalu besar', 'Processor mengalami Overheating akibat fan cooler tidak berputar / paste kering', 'Kabel SATA terlepas', 'GPU kekurangan VRAM'],
+        q: '3. Kasus LAN Card (Jaringan Tidak Terdeteksi): Setelah memasang LAN Card di slot PCIe x1 dan mencolokkan kabel UTP, komputer tidak mendeteksi koneksi jaringan dan lampu Link LED mati. Langkah pemeriksaan fisik pertama adalah...',
+        opts: [
+          'A. Melepas CPU Cooler dan mengganti thermal paste',
+          'B. Memastikan LAN Card tertancap rapat pada slot PCIe x1 serta memeriksa konektor RJ-45 kabel UTP',
+          'C. Memindahkan RAM dari slot A2 ke slot A1',
+          'D. Mengganti kabel Power 24-Pin ATX'
+        ],
         ans: 1,
-        exp: 'Sistem proteksi termal CPU (Thermal Throttling / Shut off) otomatis mematikan daya jika suhu CPU melampaui 100°C.'
+        exp: 'Koneksi LAN Card yang kurang rapat pada slot PCIe x1 atau kabel RJ-45 yang longgar membuat perangkat NIC tidak terdeteksi sistem.'
       },
       {
-        q: '7. Soket Intel LGA 1700 memiliki ciri khas fisik utama berupa:',
-        options: ['Pin jarum berada di bawah processor', 'Pin elastis berada di motherboard (Land Grid Array) tanpa jarum di CPU', 'Memiliki 2000 pin ulir', 'Soket berbentuk lingkaran'],
-        ans: 1,
-        exp: 'LGA (Land Grid Array) menempatkan pin pendorong pada soket motherboard, sedangkan bagian bawah CPU berupa bantalan emas rata.'
-      },
-      {
-        q: '8. Kabel daya yang wajib terhubung langsung dari PSU ke motherboard untuk mensuplai daya utama sistem adalah:',
-        options: ['Kabel PCIe 8-Pin', 'Kabel SATA Power', 'Kabel Main ATX 24-Pin', 'Kabel Molex 4-Pin'],
+        q: '4. Pada motherboard dengan 4 slot DIMM (A1, A2, B1, B2), pemasangan 2 keping RAM DDR5 agar bekerja dalam mode Dual Channel paling optimal diletakkan pada...',
+        opts: [
+          'A. Slot A1 dan A2',
+          'B. Slot B1 dan B2',
+          'C. Slot A2 dan B2',
+          'D. Slot A1 dan B2 secara acak'
+        ],
         ans: 2,
-        exp: 'Kabel Main ATX 24-Pin menyediakan jalur voltase 3.3V, 5V, dan 12V untuk seluruh sirkuit motherboard.'
+        exp: 'Slot A2 dan B2 adalah konfigurasi prioritas Dual Channel 128-bit pada mayoritas motherboard ATX modern.'
+      },
+      {
+        q: '5. Komputer mati mendadak (thermal shutdown) beberapa menit setelah dinyalakan dan suhu CPU di UEFI BIOS mencapai 98°C. Penyebab fisik paling mungkin adalah...',
+        opts: [
+          'A. Stiker plastik pelindung di dasar heatsink CPU Cooler lupa dilepas atau thermal paste tidak diaplikasikan',
+          'B. LAN Card terpasang di slot PCIe x1',
+          'C. Kapasitas SSD M.2 NVMe terlalu besar',
+          'D. Kabel Front Panel HDD LED terbalik'
+        ],
+        ans: 0,
+        exp: 'Plastik pelindung heatsink menghalangi perpindahan panas dari IHS CPU ke pendingin sehingga suhu melonjak drastis.'
+      },
+      {
+        q: '6. Mengapa olesan Thermal Paste pada IHS Processor cukup seukuran biji jagung di bagian tengah?',
+        opts: [
+          'A. Sebagai lem permanen agar CPU tidak lepas dari soket',
+          'B. Mengisi celah udara mikroskopis secara merata saat ditekan cooler tanpa meluber ke pin motherboard',
+          'C. Meningkatkan voltase listrik ke VRM motherboard',
+          'D. Mencegah debu masuk ke slot PCIe x16'
+        ],
+        ans: 1,
+        exp: 'Tekanan baut cooler akan meratakan pasta tipis untuk menutup pori mikro udara yang merupakan penghantar panas buruk.'
+      },
+      {
+        q: '7. Slot ekspansi pendek pada motherboard yang umum digunakan untuk memasang LAN Card (NIC) modern berkecepatan Gigabit adalah...',
+        opts: [
+          'A. Slot DIMM DDR5',
+          'B. Slot LGA 1700',
+          'C. Slot PCIe x1',
+          'D. Header ATX 24-Pin'
+        ],
+        ans: 2,
+        exp: 'Slot PCIe x1 dirancang khusus untuk kartu ekspansi berkebutuhan bandwidth ringkas seperti LAN Card (NIC), Wi-Fi Card, dan Sound Card.'
+      },
+      {
+        q: '8. Ketika tombol Power pada casing ditekan, PC sama sekali tidak merespons (mati total). Dua titik pertama yang wajib diperiksa teknisi adalah...',
+        opts: [
+          'A. Pemasangan kabel POWER SW pada header F_PANEL serta sambungan kabel Main ATX 24-Pin & saklar PSU',
+          'B. Resolusi layar monitor dan driver VGA',
+          'C. Kecepatan baca SSD M.2 NVMe',
+          'D. Lampu indikator RJ-45 pada LAN Card'
+        ],
+        ans: 0,
+        exp: 'Kabel POWER SW memicu sinyal penyalaan ke motherboard, sedangkan kabel ATX 24-Pin menyuplai arus utama dari PSU.'
       }
     ];
 
-    let userQuizAnswers = Array(quizData.length).fill(null);
+    let quizAnswers = Array(quizQuestions.length).fill(null);
 
     function renderQuiz() {
       const container = document.getElementById('quiz-container');
-      container.innerHTML = quizData.map((item, qIdx) => `
+      container.innerHTML = quizQuestions.map((item, qIdx) => `
         <div class="quiz-card">
-          <div style="font-weight:bold; font-size:14px; color:var(--text-main);">${item.q}</div>
+          <div class="quiz-question">${item.q}</div>
           <div class="quiz-options">
-            ${item.options.map((opt, oIdx) => `
-              <button class="quiz-option-btn ${userQuizAnswers[qIdx] === oIdx ? 'selected' : ''}" 
-                      onclick="selectQuizAnswer(${qIdx}, ${oIdx})">
-                ${String.fromCharCode(65 + oIdx)}. ${opt}
-              </button>
+            ${item.opts.map((opt, oIdx) => `
+              <button class="quiz-opt-btn" id="q-${qIdx}-o-${oIdx}" onclick="answerQuiz(${qIdx}, ${oIdx})">${opt}</button>
             `).join('')}
           </div>
-          <div id="quiz-exp-${qIdx}" style="display:none; margin-top:10px; font-size:12px; padding:8px; background:rgba(0,229,255,0.05); border-left:3px solid var(--accent-neon); color:var(--text-muted);">
+          <div class="quiz-exp" id="q-exp-${qIdx}">
             <strong>Pembahasan Guru:</strong> ${item.exp}
           </div>
         </div>
       `).join('');
     }
 
-    function selectQuizAnswer(qIdx, oIdx) {
-      playSound('click');
-      userQuizAnswers[qIdx] = oIdx;
+    function answerQuiz(qIdx, oIdx) {
+      if (quizAnswers[qIdx] !== null) return;
+      quizAnswers[qIdx] = oIdx;
 
-      // Hitung Skor Kuis
-      let score = 0;
-      userQuizAnswers.forEach((ans, idx) => {
-        if (ans === quizData[idx].ans) {
-          score += (100 / quizData.length);
-        }
+      const correctIdx = quizQuestions[qIdx].ans;
+      const isRight = (oIdx === correctIdx);
+      playSound(isRight ? 'snap' : 'error');
+
+      quizQuestions[qIdx].opts.forEach((_, idx) => {
+        const btn = document.getElementById(`q-${qIdx}-o-${idx}`);
+        btn.disabled = true;
+        if (idx === correctIdx) btn.classList.add('correct');
+        else if (idx === oIdx) btn.classList.add('wrong');
       });
 
-      document.getElementById('quiz-score-display').innerText = `Skor Kuis: ${Math.round(score)} / 100`;
-
-      // Render ulang status opsi
-      const card = document.querySelectorAll('.quiz-card')[qIdx];
-      const btns = card.querySelectorAll('.quiz-option-btn');
-      btns.forEach((btn, idx) => {
-        btn.className = 'quiz-option-btn';
-        if (idx === oIdx) {
-          if (oIdx === quizData[qIdx].ans) {
-            btn.classList.add('correct-ans');
-          } else {
-            btn.classList.add('wrong-ans');
-          }
-        }
-      });
-
-      document.getElementById(`quiz-exp-${qIdx}`).style.display = 'block';
+      document.getElementById(`q-exp-${qIdx}`).style.display = 'block';
+      document.getElementById('quiz-score-pill').textContent = `Skor Kuis: ${calculateQuizScore()} / 100`;
     }
 
-    function getQuizScore() {
-      let score = 0;
-      userQuizAnswers.forEach((ans, idx) => {
-        if (ans === quizData[idx].ans) {
-          score += (100 / quizData.length);
-        }
+    function calculateQuizScore() {
+      let correctCount = 0;
+      quizAnswers.forEach((ans, idx) => {
+        if (ans === quizQuestions[idx].ans) correctCount++;
       });
-      return Math.round(score);
+      return Math.round((correctCount / quizQuestions.length) * 100);
+    }
+
+    function resetQuiz() {
+      playSound('click');
+      quizAnswers = Array(quizQuestions.length).fill(null);
+      document.getElementById('quiz-score-pill').textContent = 'Skor Kuis: 0 / 100';
+      renderQuiz();
     }
 
     /* ==========================================================================
-       MODUL CETAK SERTIFIKAT
+       8. INISIALISASI SAAT HALAMAN DIMUAT
        ========================================================================== */
-    function openCertificateModal() {
-      playSound('click');
-      const nama = document.getElementById('input-nama').value.trim();
-      const nisn = document.getElementById('input-nisn').value.trim();
-
-      if (!nama || !nisn) {
-        alert('Harap isi Nama Lengkap Siswa dan NISN terlebih dahulu pada form di Tab 3!');
-        return;
-      }
-
-      // Populate Sertifikat Data
-      document.getElementById('cert-display-nama').innerText = nama.toUpperCase();
-      document.getElementById('cert-display-nisn').innerText = nisn;
-      document.getElementById('cert-progress-val').innerText = `${currentStepIndex} / 9 Selesai`;
-      
-      const assemblyStatus = document.getElementById('cert-assembly-status');
-      if (currentStepIndex === 9) {
-        assemblyStatus.innerText = 'LENGKAP';
-        assemblyStatus.style.color = '#16a34a';
-      } else {
-        assemblyStatus.innerText = 'BELUM LENGKAP';
-        assemblyStatus.style.color = '#dc2626';
-      }
-
-      document.getElementById('cert-post-val').innerText = isPostTested ? 'BERHASIL (POST OK)' : 'BELUM DIUJI';
-
-      const quizScore = getQuizScore();
-      document.getElementById('cert-quiz-val').innerText = `${quizScore} / 100`;
-      
-      const quizStatus = document.getElementById('cert-quiz-status');
-      if (quizScore >= 75) {
-        quizStatus.innerText = 'KOMPETEN';
-        quizStatus.style.color = '#16a34a';
-      } else {
-        quizStatus.innerText = 'CUKUP';
-        quizStatus.style.color = '#ca8a04';
-      }
-
-      const predikat = document.getElementById('cert-predikat');
-      if (currentStepIndex === 9 && isPostTested && quizScore >= 75) {
-        predikat.innerText = 'SANGAT KOMPETEN';
-        predikat.style.color = '#16a34a';
-      } else if (currentStepIndex === 9) {
-        predikat.innerText = 'KOMPETEN';
-        predikat.style.color = '#2563eb';
-      } else {
-        predikat.innerText = 'PERLU PENDAMPINGAN';
-        predikat.style.color = '#dc2626';
-      }
-
-      const now = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('cert-date').innerText = now.toLocaleDateString('id-ID', options);
-
-      document.getElementById('certificate-modal').style.display = 'flex';
-    }
-
-    function printCertificate() {
-      window.print();
-    }
-
-    /* ==========================================================================
-       INITIALIZATION
-       ========================================================================== */
-    window.onload = function() {
+    window.addEventListener('DOMContentLoaded', () => {
+      updateTimerUI();
       renderEncyclopedia();
       renderCompList();
       renderQuiz();
       loadStudentData();
-      updateTimerDisplay();
-    };
+    });
   </script>
 </body>
 </html>
